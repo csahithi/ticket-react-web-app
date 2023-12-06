@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 // import Nav from 'react-bootstrap/Nav';
 
 function CustomNav() {
-  const currentUser = 1;
+  const { currentUser } = useSelector((state) => state.userReducer);
+  // const currentUser = 1;
   return (
   
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
