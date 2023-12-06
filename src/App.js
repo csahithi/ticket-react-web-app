@@ -6,6 +6,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Navigation from "./Nav";
 import Tickets from "./Tickets";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (

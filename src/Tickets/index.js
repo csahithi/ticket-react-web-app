@@ -10,7 +10,7 @@ import { useState } from "react";
 // import UserDetails from "./users/details";
 import store from "./store";
 import { Provider } from "react-redux";
-import Navigation from "../Nav";
+import CustomNav from "../Nav";
 // import CurrentUser from "./users/currentUser";
 
 function Tickets() {
@@ -21,15 +21,16 @@ function Tickets() {
       {/* <CurrentUser> */}
         <div className="container-fluid">
           <div className="row">
-            <div className="col-2">
-              <Navigation />
+              <CustomNav />
             </div>
-            <div className="col-10">
+          <div className="row">
+            <div className="col">
               <Routes>
                 <Route path="/" element={<Home/>} />
                 <Route path="/login" element={<Login/>} />
                 <Route path="/profile" element={<Profile/>} />
                 <Route path="/register" element={<Register/>} />
+                
                 
                 {/* <Route path="/search" element={<Search />} />
                 <Route path="/search/:search" element={<Search />} />
