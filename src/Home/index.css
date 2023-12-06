@@ -1,0 +1,35 @@
+.animate-charcter
+{
+   
+  background-image: linear-gradient(
+    -225deg,
+    #e4e4e4 0%,
+    #e1c5ff 29%,
+    #b41313 67%,
+    #f4ec09 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  /* text-fill-color: transparent; */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+      font-size: 60px;
+}
+.tagline{
+    position: absolute;
+      top: 50%; /* Adjust the top position as needed */
+      left: 50%; /* Center the text horizontally */
+      transform: translate(-50%, -50%); 
+      background-color: transparent;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}

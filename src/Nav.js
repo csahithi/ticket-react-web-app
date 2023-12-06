@@ -1,43 +1,67 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { Link } from 'react-router-dom';
+// import Nav from 'react-bootstrap/Nav';
 
-function Navigation() {
+function CustomNav() {
   const { currentUser } = useSelector((state) => state.userReducer);
   // const currentUser = 1;
   return (
-    <>
-      <div className="list-group">
-        <Link to="/tickets" className="list-group-item">
+  
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    
+    <Link to="/tickets" className="navbar-brand">
           Home
-        </Link>
-        {!currentUser && (
+         </Link>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {/* <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li> */}
+        {currentUser && (
           <>
-            <Link to="/tickets/login" className="list-group-item">
+          <li class="nav-item">
+            <Link to="/tickets/login" className="nav-link">
               Login
             </Link>
-            <Link to="/tickets/register" className="list-group-item">
+          </li>
+            <li class="nav-item">
+            <Link to="/tickets/register" className="nav-link">
               Register
             </Link>
+          </li>
           </>
         )}
-        {currentUser && (
-          <Link to="/tickets/profile" className="list-group-item">
+         {currentUser && (
+          <li class="nav-item">
+
+          <Link to="/tickets/profile" className="nav-link">
             Profile
           </Link>
+          </li>
         )}
-        <Link to="/tickets/search" className="list-group-item">
-          Search
-        </Link>
         {/* <Link to="/project/users" className="list-group-item">
           Users
         </Link> */}
         {/* <Link to="/project/details" className="list-group-item">
         Details
       </Link> */}
-      </div>
-    </>
+      
+      </ul>
+      
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+        <Link to="/tickets/search" className="btn btn-outline-success">
+        Search
+      </Link>
+      </form>
+    </div>
+  </div>
+</nav>
   );
 }
 
-export default Navigation;
+export default CustomNav;
