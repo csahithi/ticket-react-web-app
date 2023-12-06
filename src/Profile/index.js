@@ -1,4 +1,8 @@
-import { useState } from 'react';
+import * as client from "../users/client";
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../users/reducer";
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -7,26 +11,47 @@ import Row from 'react-bootstrap/Row';
 import Modal from 'react-bootstrap/Modal';
 import { BsFillPencilFill } from "react-icons/bs";
 function Profile() {
-    const [validated, setValidated] = useState(false);
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+  const [validated, setValidated] = useState(false);
+  const [show, setShow] = useState(false);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const fetchUser = async () => {
+    try {
+      const user = await client.profile();
+      setUser(user);
+    } catch (error) {
+      navigate("/tickets/login");
     }
-
+  };
+  const updateUser = async () => {
+    const status = await client.updateUser(user._id, user);
+  };
+  const logout = async () => {
+    const status = await client.logout();
+    dispatch(setCurrentUser(null));
+    navigate("/tickets");
+  };
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handleSubmit = (event) => {
+  const form = event.currentTarget;
+  if (form.checkValidity() === false) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
     setValidated(true);
   };
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
     <>
     <br />
     <div className='container'>
-    
+      {user && (
+        <div>
         <div className='row'>
             <div className='col'>
             <h2>Profile</h2>
@@ -47,8 +72,9 @@ function Profile() {
             <Form.Label>First Name</Form.Label>
               <Form.Control
                 type="text"
-                // value={course.number} onChange={(e) => setCourse({ ...course, number: e.target.value }) }
                 placeholder="Enter First Name" 
+                value={user.firstName}
+                onChange={(e) => setUser({ ...user, firstName: e.target.value })}
                 autoFocus
               />
             </Form.Group>
@@ -56,44 +82,68 @@ function Profile() {
             <Form.Label>Last Name</Form.Label>
               <Form.Control
                 type="text"
-                // value={course.number} onChange={(e) => setCourse({ ...course, number: e.target.value }) }
                 placeholder="Enter Last Name" 
-                
+                value={user.lastName}
+                onChange={(e) => setUser({ ...user, lastName: e.target.value })}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
-                // value={course.number} onChange={(e) => setCourse({ ...course, number: e.target.value }) }
                 placeholder="Enter Password" 
                 
               />
-            </Form.Group>
+            </Form.Group> */}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="name@example.com"
-                
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Location</Form.Label>
               <Form.Control
                 type="text"
-                // value={course.number} onChange={(e) => setCourse({ ...course, number: e.target.value }) }
                 placeholder="Enter Location" 
-                
+                value={user.location}
+                onChange={(e) => setUser({ ...user, location: e.target.value })}
+              />
+            </Form.Group>
+            <Form.Group className="mb-2">
+              <Form.Check
+                type="radio"
+                label="Buyer"
+                id="buyer-radio"
+                value="BUYER"
+                checked={user.role === "BUYER"}
+                onChange={(e) => setUser({ ...user, role: e.target.value })}
+              />
+              <Form.Check
+                type="radio"
+                label="Seller"
+                id="seller-radio"
+                value="SELLER"
+                checked={user.role === "SELLER"}
+                onChange={(e) => setUser({ ...user, role: e.target.value })}
               />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={handleClose}>
+          <Button variant="danger" onClick={()=> {
+            fetchUser();
+            handleClose();
+            }}>
             Close
           </Button>
-          <Button variant="success" onClick={handleClose}>
+          <Button variant="success" onClick={()=> {
+            updateUser();
+            handleClose();
+            }}>
             Save Changes
           </Button>
         </Modal.Footer>
@@ -111,7 +161,7 @@ function Profile() {
             disabled
             type="text"
             placeholder="First name"
-            defaultValue="Mark"
+            value={user.firstName}
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
@@ -121,7 +171,7 @@ function Profile() {
             disabled
             type="text"
             placeholder="Last name"
-            defaultValue="Otto"
+            value={user.lastName}
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
@@ -132,6 +182,7 @@ function Profile() {
             <Form.Control
               type="text"
               placeholder="Username"
+              value={user.username}
               aria-describedby="inputGroupPrepend"
               disabled
             />
@@ -144,7 +195,7 @@ function Profile() {
       <Row className="mb-3">
         <Form.Group as={Col} md="3" controlId="validationCustom04">
           <Form.Label>Location</Form.Label>
-          <Form.Control type="text" placeholder="location" disabled />
+          <Form.Control type="text" placeholder="Location" value={user.location} disabled />
           <Form.Control.Feedback type="invalid">
             Please provide a valid location.
           </Form.Control.Feedback>
@@ -155,7 +206,17 @@ function Profile() {
             disabled
             type="email"
             placeholder="Email"
-            defaultValue="Otto"
+            value={user.email}
+          />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group as={Col} md="4" controlId="validationCustom02">
+          <Form.Label>Category</Form.Label>
+          <Form.Control
+            disabled
+            type="text"
+            placeholder="Category"
+            value={user.role}
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
@@ -163,8 +224,11 @@ function Profile() {
       </Row>
       
     </Form>
+    <button onClick={logout} className="btn btn-danger">Logout</button>
     </div>   
     </div>
+    </div>
+    )}
     </div>
   
     </>

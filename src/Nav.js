@@ -22,7 +22,7 @@ function CustomNav() {
         {/* <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li> */}
-        {currentUser && (
+        {!currentUser && (
           <>
           <li class="nav-item">
             <Link to="/tickets/login" className="nav-link">
