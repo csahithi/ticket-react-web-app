@@ -8,17 +8,17 @@ import { Routes, Route, Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 // import UserList from "./users/list";
 // import UserDetails from "./users/details";
-import store from "./store";
+import store from "../store";
 import { Provider } from "react-redux";
 import Navigation from "../Nav";
-// import CurrentUser from "./users/currentUser";
+import CurrentUser from "../users/currentUser";
 
 function Tickets() {
 //   const [key, setKey] = useState("home");
 
   return (
     <Provider store={store}>
-      {/* <CurrentUser> */}
+      <CurrentUser>
         <div className="container-fluid">
           <div className="row">
             <div className="col-2">
@@ -40,7 +40,7 @@ function Tickets() {
             </div>
           </div>
         </div>
-      {/* </CurrentUser> */}
+      </CurrentUser>
     </Provider>
   );
 }

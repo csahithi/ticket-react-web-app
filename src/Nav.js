@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function Navigation() {
-  // const { currentUser } = useSelector((state) => state.userReducer);
-  const currentUser = 1;
+  const { currentUser } = useSelector((state) => state.userReducer);
+  // const currentUser = 1;
   return (
     <>
       <div className="list-group">
