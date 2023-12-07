@@ -53,12 +53,12 @@ function CustomNav() {
       
       </ul>
       
-      <form class="d-flex" role="search">
+      {/* <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
         <Link to="/tickets/search" className="btn btn-outline-success">
         Search
       </Link>
-      </form>
+      </form> */}
     </div>
   </div>
 </nav>

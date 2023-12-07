@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import one from '../images/one.jpg';
@@ -41,8 +42,11 @@ function Home() {
   </div>
 </div>
     </div>
-    
-    
+    <br/>
+    <br/>
+    <Link to="/tickets/search" className="btn btn-outline-success">
+        View Events
+      </Link>
     </div>
   );
 }
