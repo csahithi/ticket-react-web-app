@@ -12,6 +12,7 @@ import store from "../store";
 import { Provider } from "react-redux";
 import CustomNav from "../Nav";
 import CurrentUser from "../users/currentUser";
+import UserDetails from "../UserDetails";
 
 function Tickets() {
 //   const [key, setKey] = useState("home");
@@ -30,6 +31,7 @@ function Tickets() {
                 <Route path="/login" element={<Login/>} />
                 <Route path="/profile" element={<Profile/>} />
                 <Route path="/register" element={<Register/>} />
+                <Route path="/users/:userId" element={<UserDetails/>} />
                 
                 
                 {/* <Route path="/search" element={<Search />} />

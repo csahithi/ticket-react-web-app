@@ -6,7 +6,7 @@ const request = axios.create({
 
 const API_BASE = process.env.REACT_APP_API_BASE_URL || "http://localhost:4000";
 const USERS_API = `${API_BASE}/api/users`;
-
+const FOLLOWERS_API = `${API_BASE}/api/followers`;
 export const login = async (credentials) => {
   const response = await request.post(`${USERS_API}/login`, credentials);
   return response.data;
@@ -30,6 +30,13 @@ export const findUserById = async (id) => {
   const response = await request.get(`${USERS_API}/${id}`);
   return response.data;
 };
+
+export const getFollowingList = async (id) => {
+  const response = await request.get(`${FOLLOWERS_API}/following/${id}`);
+  return response.data;
+};
+
+
 
 export const updateUser = async (id, user) => {
   const response = await request.put(`${USERS_API}/${id}`, user);

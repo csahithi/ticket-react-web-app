@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../users/reducer";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -21,25 +24,40 @@ function Login() {
   };
   return (
     <div>
-      <h2>Login</h2>
+      
       {error && <div className="alert alert-danger">{error.message}</div>}
+      <br/>
+      <div className='row'>
+        <div className='col d-flex justify-content-center'>
+        <Card style={{ width: '22rem' }}>
+          <Card.Header style={{textAlign:'center'}}>
+          <h2>Login</h2>
+          </Card.Header>
+        <Card.Body>
       <input
         type="text"
-        className="form-control"
-        placeholder="Username"
+        className="form-control mb-3 mr-sm-3"
+        placeholder="Enter Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <input
         type="password"
-        className="form-control"
-        placeholder="Password"
+        className="form-control mb-3 mr-sm-3"
+        placeholder="Enter Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={login} className="btn btn-primary">
         Login
       </button>
+
+      </Card.Body>
+      </Card>
+      </div>
+      </div>
+      
+
     </div>
   );
 }

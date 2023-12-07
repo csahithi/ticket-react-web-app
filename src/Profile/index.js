@@ -10,6 +10,8 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import Modal from 'react-bootstrap/Modal';
 import { BsFillPencilFill } from "react-icons/bs";
+import Card from 'react-bootstrap/Card';
+import "./index.css";
 function Profile() {
   const [validated, setValidated] = useState(false);
   const [show, setShow] = useState(false);
@@ -22,6 +24,27 @@ function Profile() {
       setUser(user);
     } catch (error) {
       navigate("/tickets/login");
+    }
+  };
+  const [followingList, setFollowingList] = useState([]);
+  const fetchFollowingList = async () => {
+    try {
+      if (!user) {
+        console.log("User is null");
+        return;
+      }
+      console.log("Fetching following list for user:", user._id);
+      const followingList = await client.getFollowingList(user._id);
+      const updatedFollowingList = await Promise.all(
+        followingList.map(async (following) => {
+          const userData = await client.findUserById(following.followingId);
+          return { ...following, followingUsername: userData.username };
+        })
+      );
+
+      setFollowingList(updatedFollowingList);
+    } catch (error) {
+      console.error("Error fetching following list:", error);
     }
   };
   const updateUser = async () => {
@@ -45,6 +68,11 @@ function Profile() {
   useEffect(() => {
     fetchUser();
   }, []);
+  useEffect(() => {
+    if (user) {
+      fetchFollowingList();
+    }
+  }, [user]);
 
   return (
     <>
@@ -57,7 +85,8 @@ function Profile() {
             <h2>Profile</h2>
       
             <div className='float-end'>
-                <Button variant='warning' onClick={handleShow}><BsFillPencilFill /> Edit Profile</Button>
+                <Button variant='warning' className="me-3" onClick={handleShow}><BsFillPencilFill /> Edit Profile</Button>
+                <button onClick={logout} className="btn btn-danger">Logout</button>
             </div>
         </div>
         </div>
@@ -224,7 +253,25 @@ function Profile() {
       </Row>
       
     </Form>
-    <button onClick={logout} className="btn btn-danger">Logout</button>
+    
+    {/* <h2>{user._id}</h2> */}
+    <h2>Following list ({followingList.length})</h2>
+    <hr />
+    <div className="row">
+      {followingList.map((user) => (
+        <div key={user._id} className="col-md-4 mb-4">
+          <Card style={{ backgroundColor: '#0dcaf0' }} className="hover-card">
+            <Card.Body>
+              <Card.Title>
+                <Link to={`/tickets/users/${user.followingId}`} style={{textDecoration:"none",color:"black"}}>
+                  {user.followingUsername}
+                </Link>
+              </Card.Title>
+            </Card.Body>
+          </Card>
+        </div>
+      ))}
+    </div>
     </div>   
     </div>
     </div>
