@@ -64,20 +64,20 @@ function Register() {
             <input class="form-check-input" type="radio" value="BUYER" 
             checked={credentials.role === "BUYER"}
             onChange={(e) => setCredentials({ ...credentials, role: e.target.value })}
-            name="flexRadioDefault" id="flexRadioDefault1"/>
+            name="flexRadio" id="flexRadioDefault1"/>
             <label class="form-check-label" for="flexRadioDefault1">
                 Buyer
             </label>
             </div>
-            <div class="form-check">
-            <input class="form-check-input" type="radio" 
-            value="SELLER"
-            checked={credentials.role === "SELLER"}
-            onChange={(e) => setCredentials({ ...credentials, role: e.target.value })}
-            name="flexRadioDefault" id="flexRadioDefault2" checked/>
-            <label class="form-check-label" for="flexRadioDefault2">
-            Seller
-            </label>
+            <div className="form-check">
+                <input className="form-check-input" type="radio" 
+                    value="SELLER"
+                    checked={credentials.role === "SELLER"}
+                    onChange={(e) => setCredentials({ ...credentials, role: e.target.value })}
+                    name="flexRadioD" id="flexRadioDefault2" />
+                <label className="form-check-label" htmlFor="flexRadioDefault2">
+                    Seller
+                </label>
             </div>
       
             <button className="btn btn-primary w-100" onClick={register}>
