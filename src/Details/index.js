@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import * as client from "../Search/client";
 import * as userClient from "../users/client";
 import * as likesClient from "../likes/client";
@@ -7,7 +9,6 @@ import * as likesClient from "../likes/client";
 function Details({ location }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [event, setEvent] = useState(null);
-//   const [tracks, setTracks] = useState([]);
   const { eventId } = useParams();
   const [likes, setLikes] = useState([]);
 // console.log("S: ", location);
@@ -26,11 +27,6 @@ function Details({ location }) {
     setEvent(event);
   };
 
-//   const fetchTracks = async () => {
-//     const tracks = await client.findTracksByEventId(eventId);
-//     setTracks(tracks);
-//   };
-
   const fetchLikes = async () => {
     const likes = await likesClient.findUsersThatLikeEvent(eventId);
     setLikes(likes);
@@ -42,13 +38,13 @@ function Details({ location }) {
       eventId
     );
     setLikes([_likes, ...likes]);
+    fetchLikes();
   };
 
   useEffect(() => {
     fetchEvent();
-    // fetchTracks();
     fetchUser();
-    // fetchLikes();
+    fetchLikes();
   }, []);
 
 //   if (!location || !location.state) {
@@ -64,9 +60,8 @@ function Details({ location }) {
           {currentUser && (
             <button
               onClick={currenUserLikesEvent}
-              className="btn btn-warning float-end"
-            >
-              Like
+              className="btn btn-warning float-end me-4">
+              <FontAwesomeIcon icon={faHeart} />
             </button>
           )}
           {/* <h1>{eventName}</h1> */}
@@ -77,30 +72,17 @@ function Details({ location }) {
             src={`https://api.napster.com/imageserver/v2/events/${event.id}/images/300x300.jpg`}
             alt={event.name}
           /> */}
-          {/* <h2>Likes</h2>
+          <h2>Likes</h2>
           <ul className="list-group">
             {likes.map((like, index) => (
               <li key={index} className="list-group-item">
                 {like.user.firstName} {like.user.lastName}
-                <Link to={`/project/users/${like.user._id}`}>
+                <Link to={`/tickets/users/${like.user._id}`}>
                   @{like.user.username}
                 </Link>
               </li>
             ))}
-          </ul> */}
-
-          {/* <h2>Tracks</h2>
-          <ul className="list-group">
-            {tracks.map((track, index) => (
-              <li key={index} className="list-group-item">
-                <h3>{track.name}</h3>
-                <audio controls>
-                  <source src={track.previewURL} type="audio/mpeg" />
-                </audio>
-              </li>
-            ))}
-          </ul> */}
-          {/* <pre>{JSON.stringify(tracks, null, 2)}</pre> */}
+          </ul>
         </div>
       )}
     </div>
