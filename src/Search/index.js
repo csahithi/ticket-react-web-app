@@ -11,18 +11,24 @@ function Search() {
   const [getEventsList, setGetEventsList] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
   const [noOfTickets, setNoOfTickets] = useState(0);
-
+  const navigate = useNavigate();
   
   const fetchEventsList = async () => {
     try {
-      const eventsList = await eventsClient.findAllEvents();
-      console.log("Events List: ", eventsList);
+      let eventsList = await eventsClient.findAllEvents();
+      console.log("Events List org: ", eventsList);
+      if(search && searchTerm!="null"){
+        console.log("Search: ", search);
+        eventsList = eventsList.filter((event) => {
+          return event.EventName.toLowerCase().includes(search.toLowerCase())
+        });
+        console.log("Events List fil: ", eventsList);
+      }
       setGetEventsList(eventsList);
     } catch (error) {
       console.error("Error fetching events list:", error);
     }
   };
-  const navigate = useNavigate();
 
   const fetchEvents = async (search) => {
     console.log("C: ", search);
@@ -70,6 +76,7 @@ function Search() {
     if (search) {
       fetchEvents(search);
     }
+    fetchEventsList();
   }, [search]);
   useEffect(() => {
     fetchEventsList();
@@ -196,7 +203,7 @@ function Search() {
 
         
 
-      {results && searchTerm!="null" &&
+      {results && search && searchTerm!="null" &&
       <div>
       <br/>
       <h2>Results ({results.length})</h2>

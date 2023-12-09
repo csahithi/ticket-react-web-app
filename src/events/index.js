@@ -64,6 +64,8 @@ function Events() {
   return (
     <div className="container">
         <br/>
+        {currentUser && currentUser==="SELLER" && (
+        <>
         <div className="row">
             <div className="col">
        <h2>Events ({getEventsList.length})</h2>
@@ -176,6 +178,8 @@ function Events() {
   ))}
 </div>
 }
+</>
+)}
     </div>
   );
 }

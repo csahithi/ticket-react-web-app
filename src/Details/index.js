@@ -10,7 +10,6 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import * as searchClient from "../Search/client";
-import mongoose from "mongoose";
 
 function Details({ location }) {
   const [currentUser, setCurrentUser] = useState(null);
