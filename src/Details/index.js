@@ -120,11 +120,9 @@ function Details({ location }) {
         <div>
          {currentUser.role==="BUYER" ? (
             <>
-            <input type="number" className="form-control" placeholder="0" min="1" max="10"  
-                          onChange={(e) => setNoOfTickets(e.target.value)}
-          />
+           
            { console.log("E: ", event.venues[0].id)} 
-           <button className="btn btn-danger" onClick={() => bookTicketsAPI()}
+           <button className="btn btn-danger  float-end" 
            >Book tickets</button>
             <button
               onClick={currenUserLikesEvent}
@@ -181,7 +179,7 @@ function Details({ location }) {
           )}
           {/* <h1>{eventName}</h1> */}
           <h3>Venue</h3>
-          {event.venues[0].id}
+          {/* {event.venues[0].id} */}
           <h3>{event.venues[0].name}</h3>
           <h4>{event.venues[0].address.line1}, {event.venues[0].city.name}, {event.venues[0].state.name}, {event.venues[0].country.name}, {event.venues[0].postalCode}</h4>
           {/* <img
