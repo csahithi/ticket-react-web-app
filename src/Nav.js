@@ -53,21 +53,25 @@ function CustomNav() {
         )}
          {currentUser && (
           <li class="nav-item">
-
           <Link to="/tickets/profile" className="nav-link">
             Profile
           </Link>
           </li>
         )}
-        {currentUser!==null ? (
-          currentUser.role==="SELLER" ?(
+        {currentUser && currentUser.role === "ADMIN" && (
+          <li class="nav-item">
+          <Link to="/tickets/users" className="nav-link">
+            Users
+          </Link>
+          </li>
+        )}
+        {currentUser && currentUser.role === "SELLER" && (
           <li class="nav-item">
           <Link to="/tickets/events" className="nav-link">
             Events
           </Link>
-          </li>):(null)
-        ):(null)
-      }
+          </li>
+        )}
         {/* <Link to="/project/users" className="list-group-item">
           Users
         </Link> */}
