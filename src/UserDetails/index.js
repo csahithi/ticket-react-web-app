@@ -76,7 +76,7 @@ function UserDetails() {
 
   useEffect(() => {
     fetchUser();
-    fetchLikes();
+    // fetchLikes();
     fetchFollowers();
     fetchFollowing();
     // const fetchUserDetails = async () => {
@@ -150,7 +150,7 @@ function UserDetails() {
     </Card>         
         </div> 
       </div>
-      <h3>Likes</h3>
+      {/* <h3>Likes</h3>
           <ul className="list-group">
             {likes.length==0 && <p>No likes yet!</p>}
             {likes.map((like, index) => (
@@ -160,7 +160,7 @@ function UserDetails() {
                 </Link>
               </li>
             ))}
-          </ul>  
+          </ul>   */}
           <h3>Followers</h3>
           <div className="list-group mb-3">
             {console.log("Followers: ", followers)}
@@ -169,7 +169,7 @@ function UserDetails() {
               <Link
                 key={index}
                 className="list-group-item"
-                to={`/tickets/users/${follows.followerId._id}`}
+                to={`/tickets/profile/${follows.followerId._id}`}
               >
                 {follows.followerId.username}
                 {follows.followerId._id}
@@ -184,7 +184,7 @@ function UserDetails() {
               <Link
                 key={index}
                 className="list-group-item"
-                to={`/tickets/users/${follows.followingId._id}`}
+                to={`/tickets/profile/${follows.followingId._id}`}
               >
                 {follows.followingId.username}
                 {follows.followingId._id}

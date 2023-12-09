@@ -173,7 +173,7 @@ function Details({ location }) {
               likes.map((like, index) => (
                 <li key={index} className="list-group-item">
                   {like.user.firstName} {like.user.lastName}{' '}
-                  <Link to={`/tickets/users/${like.user._id}`}>
+                  <Link to={`/tickets/profile/${like.user._id}`}>
                     @{like.user.username}
                   </Link>
                 </li>
@@ -190,7 +190,7 @@ function Details({ location }) {
                 {reviews.length > 0 ? (
                   reviews.map((review, index) => (
                     <li key={index} className="list-group-item">
-                      <Link to={`/tickets/users/${review.userId}`}>
+                      <Link to={`/tickets/profile/${review.userId}`}>
                       <h5>@{review.reviewUsername}</h5>
                       </Link>
                       <p>{review.review}</p>

@@ -15,6 +15,7 @@ import CurrentUser from "../users/currentUser";
 import Search from "../Search";
 import Details from "../Details";
 import UserDetails from "../UserDetails";
+import UserList from "../users/list";
 
 function Tickets() {
 //   const [key, setKey] = useState("home");
@@ -34,11 +35,10 @@ function Tickets() {
                 <Route path="/profile" element={<Profile/>} />
                 <Route path="/register" element={<Register/>} />
                 <Route path="/search" element={<Search />} />
-                <Route path="/users/:id" element={<UserDetails/>} />
+                <Route path="/profile/:id" element={<UserDetails/>} />
                 <Route path="/search/:search" element={<Search />} />
                 <Route path="/details/:eventId" element={<Details />} />
-                {/* <Route path="/users" element={<UserList />} />
-                <Route path="/users/:id" element={<UserDetails />} /> */}
+                <Route path="/users" element={<UserList />} />
               </Routes>
             </div>
           </div>

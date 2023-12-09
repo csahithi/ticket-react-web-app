@@ -44,6 +44,14 @@ function CustomNav() {
           </Link>
           </li>
         )}
+        {currentUser && currentUser.role === "ADMIN" && (
+          <li class="nav-item">
+
+          <Link to="/tickets/users" className="nav-link">
+            Users
+          </Link>
+          </li>
+        )}
         {/* <Link to="/project/users" className="list-group-item">
           Users
         </Link> */}

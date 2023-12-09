@@ -166,14 +166,15 @@ function Profile() {
                 onChange={(e) => setUser({ ...user, lastName: e.target.value })}
               />
             </Form.Group>
-            {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Enter Password" 
-                
+                value={user.password}  
+                onChange={(e) => setUser({ ...user, password: e.target.value })}           
               />
-            </Form.Group> */}
+            </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Email address</Form.Label>
               <Form.Control
@@ -337,7 +338,7 @@ function Profile() {
           <Card style={{ backgroundColor: '#0dcaf0' }} className="hover-card">
             <Card.Body>
               <Card.Title>
-                <Link to={`/tickets/users/${user.followingId._id}`} style={{textDecoration:"none",color:"black"}}>
+                <Link to={`/tickets/profile/${user.followingId._id}`} style={{textDecoration:"none",color:"black"}}>
                   {user.followingUsername}
                 </Link>
               </Card.Title>
@@ -358,7 +359,7 @@ function Profile() {
           <Card style={{ backgroundColor: '#0dcaf0' }} className="hover-card">
             <Card.Body>
               <Card.Title>
-                <Link to={`/tickets/users/${user.followerId._id}`} style={{textDecoration:"none",color:"black"}}>
+                <Link to={`/tickets/profile/${user.followerId._id}`} style={{textDecoration:"none",color:"black"}}>
                   {user.followerUsername}
                 </Link>
               </Card.Title>
