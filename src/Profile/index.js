@@ -12,6 +12,8 @@ import Modal from 'react-bootstrap/Modal';
 import { BsFillPencilFill } from "react-icons/bs";
 import Card from 'react-bootstrap/Card';
 import "./index.css";
+import * as followsClient from "../follows/client";
+import * as likesClient from "../likes/client";
 function Profile() {
   const [validated, setValidated] = useState(false);
   const [show, setShow] = useState(false);
@@ -27,6 +29,8 @@ function Profile() {
     }
   };
   const [followingList, setFollowingList] = useState([]);
+  const [followersList, setFollowersList] = useState([]);
+  const [likesList, setLikesList] = useState([]);
   const fetchFollowingList = async () => {
     try {
       if (!user) {
@@ -34,15 +38,59 @@ function Profile() {
         return;
       }
       console.log("Fetching following list for user:", user._id);
-      const followingList = await client.getFollowingList(user._id);
-      const updatedFollowingList = await Promise.all(
+      const followingList = await followsClient.findFollowedUsersByUser(user._id);
+      console.log("Following list:", followingList);
+      try {const updatedFollowingList = await Promise.all(
         followingList.map(async (following) => {
-          const userData = await client.findUserById(following.followingId);
+          const userData = await client.findUserById(following.followingId._id);
           return { ...following, followingUsername: userData.username };
         })
-      );
-
+      );      
       setFollowingList(updatedFollowingList);
+    }
+      catch (error) {
+        console.error("Error fetching user:", error);
+      }
+
+    } catch (error) {
+      console.error("Error fetching following list:", error);
+    }
+  };
+  const fetchFollowersList = async () => {
+    try {
+      if (!user) {
+        console.log("User is null");
+        return;
+      }
+      console.log("Fetching followers list for user:", user._id);
+      const followersList = await followsClient.findFollowersOfUser(user._id);
+      console.log("Followers list:", followersList);
+      try {const updatedFollowersList = await Promise.all(
+        followersList.map(async (follower) => {
+          const userData = await client.findUserById(follower.followerId._id);
+          return { ...follower, followerUsername: userData.username };
+        })
+      );      
+      setFollowersList(updatedFollowersList);
+    }
+      catch (error) {
+        console.error("Error fetching user:", error);
+      }
+
+    } catch (error) {
+      console.error("Error fetching following list:", error);
+    }
+  };
+  const fetchLikesList = async () => {
+    try {
+      if (!user) {
+        console.log("User is null");
+        return;
+      }
+      console.log("Fetching likes list for user:", user._id);
+      const likesList = await likesClient.findEventsThatUserLikes(user._id);
+      console.log("Likes list:", likesList);      
+      setLikesList(likesList);
     } catch (error) {
       console.error("Error fetching following list:", error);
     }
@@ -71,6 +119,8 @@ function Profile() {
   useEffect(() => {
     if (user) {
       fetchFollowingList();
+      fetchFollowersList();
+      fetchLikesList();
     }
   }, [user]);
 
@@ -255,15 +305,39 @@ function Profile() {
     </Form>
     
     {/* <h2>{user._id}</h2> */}
-    <h2>Following list ({followingList.length})</h2>
+    <h2>Likes ({likesList.length})</h2>
     <hr />
-    <div className="row">
+    {likesList.length==0 && <p>You haven't liked any events yet!</p>}
+    {user && <div>
+      <div className="row">
+      {console.log("Likes list:", likesList)}
+      {likesList.map((like) => (
+        <div key={like._id} className="col-md-4 mb-4">
+          <Card style={{ backgroundColor: '#0dcaf0' }} className="hover-card">
+            <Card.Body>
+              <Card.Title>
+                <Link to={`/tickets/details/${like.eventId}`} style={{textDecoration:"none",color:"black"}}>
+                  {like.eventId}
+                </Link>
+              </Card.Title>
+            </Card.Body>
+          </Card>
+        </div>
+      ))}
+    </div>
+    </div>}
+    <h2>Following ({followingList.length})</h2>
+    {followingList.length==0 && <p>You are not following anyone yet!</p>}
+    <hr />
+    {user && <div>
+      <div className="row">
+      {console.log("Following list:", followingList)}
       {followingList.map((user) => (
         <div key={user._id} className="col-md-4 mb-4">
           <Card style={{ backgroundColor: '#0dcaf0' }} className="hover-card">
             <Card.Body>
               <Card.Title>
-                <Link to={`/tickets/users/${user.followingId}`} style={{textDecoration:"none",color:"black"}}>
+                <Link to={`/tickets/users/${user.followingId._id}`} style={{textDecoration:"none",color:"black"}}>
                   {user.followingUsername}
                 </Link>
               </Card.Title>
@@ -272,6 +346,28 @@ function Profile() {
         </div>
       ))}
     </div>
+    </div>}
+    <h2>Followers ({followersList.length})</h2>
+    <hr />
+    {followersList.length==0 && <p>You don't have followers yet!</p>}
+    {user && <div>
+      <div className="row">
+      {console.log("Followers list:", followersList)}
+      {followersList.map((user) => (
+        <div key={user._id} className="col-md-4 mb-4">
+          <Card style={{ backgroundColor: '#0dcaf0' }} className="hover-card">
+            <Card.Body>
+              <Card.Title>
+                <Link to={`/tickets/users/${user.followerId._id}`} style={{textDecoration:"none",color:"black"}}>
+                  {user.followerUsername}
+                </Link>
+              </Card.Title>
+            </Card.Body>
+          </Card>
+        </div>
+      ))}
+    </div>
+    </div>}
     </div>   
     </div>
     </div>
