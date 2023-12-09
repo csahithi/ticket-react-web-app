@@ -45,6 +45,16 @@ export const insertTickets = async (tickets) => {
     throw error;
   }
 };
+export const insertTicketsAPI = async (tickets) => {
+  try {
+    console.log("C",tickets);
+    const response = await axios.post(`${TICKETS_API}/book`, tickets);
+    console.log("D",response.data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const findTracksByEventId = async (eventId) => {
   const response = await axios.get(
