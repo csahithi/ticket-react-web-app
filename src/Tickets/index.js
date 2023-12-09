@@ -16,6 +16,7 @@ import Search from "../Search";
 import Details from "../Details";
 import UserDetails from "../UserDetails";
 import UserList from "../users/list";
+import Events from "../events";
 
 function Tickets() {
 //   const [key, setKey] = useState("home");
@@ -39,6 +40,7 @@ function Tickets() {
                 <Route path="/search/:search" element={<Search />} />
                 <Route path="/details/:eventId" element={<Details />} />
                 <Route path="/users" element={<UserList />} />
+                <Route path="/events" element={<Events />} />
               </Routes>
             </div>
           </div>

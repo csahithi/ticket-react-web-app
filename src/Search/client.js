@@ -2,6 +2,11 @@ import axios from "axios";
 export const TICKETMASTER_API = "https://app.ticketmaster.com/discovery/v2";
 //export const API_KEY = process.env.REACT_APP_TICKETMASTER_API_KEY;
 export const API_KEY="Dnkjb6mtQTZ0QhKek4FOmsTrExRzPtG9";
+
+
+const API_BASE = "http://localhost:4000/api";
+const TICKETS_API=`${API_BASE}/tickets`;
+
 export const findEvents = async (searchTerm) => {
   console.log("C: ", searchTerm);
   const response = await axios.get(
@@ -19,6 +24,36 @@ export const findEventById = async (eventId) => {
   );
   console.log(response.data._embedded);
   return response.data._embedded ? response.data._embedded : [];
+};
+
+// export const insertTickets = async (tickets) => {
+//   try {
+//     const response = await request.post(TICKETS_API, tickets);
+//     console.log("C",response.data);
+//     return response.data;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+export const insertTickets = async (tickets) => {
+  try {
+    console.log("C",tickets);
+    const response = await axios.post(`${TICKETS_API}`, tickets);
+    console.log("D",response.data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const insertTicketsAPI = async (tickets) => {
+  try {
+    console.log("C",tickets);
+    const response = await axios.post(`${TICKETS_API}/book`, tickets);
+    console.log("D",response.data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const findTracksByEventId = async (eventId) => {
