@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import * as userClient from "./users/client";
 // import Nav from 'react-bootstrap/Nav';
 
 function CustomNav() {
   const { currentUser } = useSelector((state) => state.userReducer);
+  console.log("Current User: ", currentUser);
+  // const [presentUser, setPresentUser] = useState(null);
+  // const fetchUser = async () => {
+  //   try {
+  //     const user = await userClient.profile();
+  //     setPresentUser(user);
+  //   } catch (error) {
+  //     setPresentUser(null);
+  //   }
+  // };
+  
+  // useEffect(() => {
+  //   fetchUser();
+  // }, []);
   // const currentUser = 1;
   return (
   
@@ -44,6 +59,15 @@ function CustomNav() {
           </Link>
           </li>
         )}
+        {currentUser!==null ? (
+          currentUser.role==="SELLER" ?(
+          <li class="nav-item">
+          <Link to="/tickets/events" className="nav-link">
+            Events
+          </Link>
+          </li>):(null)
+        ):(null)
+      }
         {/* <Link to="/project/users" className="list-group-item">
           Users
         </Link> */}

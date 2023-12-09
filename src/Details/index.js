@@ -108,12 +108,8 @@ function Details({ location }) {
               className="btn btn-warning float-end me-4">
               <FontAwesomeIcon icon={faHeart} />
             </button>
-            <button className="btn btn-primary float-end me-4" onClick={handleShow}>Add review</button></>
-            
-          ):(
-            <><div className="alert alert-warning" role="alert">
-                Please log in to add a review.
-              </div><Modal show={show} onHide={handleClose}>
+            <button className="btn btn-primary float-end me-4" onClick={handleShow}>Add review</button>
+            <Modal show={show} onHide={handleClose}>
                   <Modal.Header closeButton>
                     <Modal.Title>Add Review</Modal.Title>
                   </Modal.Header>
@@ -152,7 +148,13 @@ function Details({ location }) {
                       Save Changes
                     </Button>
                   </Modal.Footer>
-                </Modal></>
+                </Modal>
+            </>
+            
+          ):(
+            <div className="alert alert-warning" role="alert">
+                Please log in to like the event or add a review.
+              </div>
           )}
           {/* <h1>{eventName}</h1> */}
           <h3>Venue</h3>
