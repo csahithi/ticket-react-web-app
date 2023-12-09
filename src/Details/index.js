@@ -9,6 +9,8 @@ import * as reviewsClient from "../reviews/client";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import * as searchClient from "../Search/client";
+import mongoose from "mongoose";
 
 function Details({ location }) {
   const [currentUser, setCurrentUser] = useState(null);
@@ -22,6 +24,7 @@ function Details({ location }) {
   const [reviews, setReviews] = useState([]);
   const [rangeValue, setRangeValue] = useState(0);
   const [reviewText, setReviewText] = useState("");
+  const [noOfTickets, setNoOfTickets] = useState(0);
   const handleRangeChange = (e) => {
     setRangeValue(e.target.value);
   };
@@ -83,6 +86,18 @@ function Details({ location }) {
     setLikes([_likes, ...likes]);
     fetchLikes();
   };
+  const bookTicketsAPI = async () => {
+    try {
+      const newTickets = {
+        userId: currentUser._id,
+        noOfTickets: noOfTickets,
+      };
+      console.log("Tickets: ", newTickets);
+      await searchClient.insertTicketsAPI(newTickets);
+    } catch (error) {
+      console.error("Error booking tickets:", error);
+    }
+  };
 
   useEffect(() => {
     fetchEvent();
@@ -101,19 +116,23 @@ function Details({ location }) {
     <div className="container">
       <br/>
       {event && (
+        
         <div>
-         {currentUser ? (
-            <><button
+         {currentUser.role==="BUYER" ? (
+            <>
+            <input type="number" className="form-control" placeholder="0" min="1" max="10"  
+                          onChange={(e) => setNoOfTickets(e.target.value)}
+          />
+           { console.log("E: ", event.venues[0].id)} 
+           <button className="btn btn-danger" onClick={() => bookTicketsAPI()}
+           >Book tickets</button>
+            <button
               onClick={currenUserLikesEvent}
               className="btn btn-warning float-end me-4">
               <FontAwesomeIcon icon={faHeart} />
             </button>
-            <button className="btn btn-primary float-end me-4" onClick={handleShow}>Add review</button></>
-            
-          ):(
-            <><div className="alert alert-warning" role="alert">
-                Please log in to add a review.
-              </div><Modal show={show} onHide={handleClose}>
+            <button className="btn btn-primary float-end me-4" onClick={handleShow}>Add review</button>
+            <Modal show={show} onHide={handleClose}>
                   <Modal.Header closeButton>
                     <Modal.Title>Add Review</Modal.Title>
                   </Modal.Header>
@@ -152,10 +171,17 @@ function Details({ location }) {
                       Save Changes
                     </Button>
                   </Modal.Footer>
-                </Modal></>
+                </Modal>
+            </>
+            
+          ):(
+            <div className="alert alert-warning" role="alert">
+                Please log in to like the event or add a review.
+              </div>
           )}
           {/* <h1>{eventName}</h1> */}
           <h3>Venue</h3>
+          {event.venues[0].id}
           <h3>{event.venues[0].name}</h3>
           <h4>{event.venues[0].address.line1}, {event.venues[0].city.name}, {event.venues[0].state.name}, {event.venues[0].country.name}, {event.venues[0].postalCode}</h4>
           {/* <img
