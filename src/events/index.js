@@ -141,7 +141,7 @@ function Events() {
       <hr/>
       {
       <div className="row row-cols-1 row-cols-md-2 g-4">
-  {getEventsList.map((event) => (
+  {getEventsList && getEventsList.map((event) => (
     <div key={event._id} className="col">
       <div className="card text-dark bg-light mb-3">
         <div className="card-body">
@@ -156,7 +156,7 @@ function Events() {
            <b>Date : </b>{event.Date} <br/>
            <b>Time : </b>{event.Time}
           </p>
-          {currentUser.role==="BUYER" && (
+          {currentUser && currentUser.role==="BUYER" && (
           <div className="card-footer">
             <div className="row">
               <div className="col-2">
