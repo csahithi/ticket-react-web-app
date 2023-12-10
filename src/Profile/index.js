@@ -14,6 +14,7 @@ import Card from 'react-bootstrap/Card';
 import "./index.css";
 import * as followsClient from "../follows/client";
 import * as likesClient from "../likes/client";
+import { BsDot } from "react-icons/bs";
 function Profile() {
   const [validated, setValidated] = useState(false);
   const [show, setShow] = useState(false);
@@ -306,7 +307,7 @@ function Profile() {
     </Form>
     
     {/* <h2>{user._id}</h2> */}
-    <h2>Likes ({likesList.length})</h2>
+    <h2>Likes<BsDot />{likesList.length}</h2>
     <hr />
     {likesList.length==0 && <p>You haven't liked any events yet!</p>}
     {user && <div>
@@ -327,7 +328,8 @@ function Profile() {
       ))}
     </div>
     </div>}
-    <h2>Following ({followingList.length})</h2>
+    <h2>Following<BsDot />{followingList.length}</h2>
+    <hr />
     {followingList.length==0 && <p>You are not following anyone yet!</p>}
     <hr />
     {user && <div>
@@ -339,7 +341,7 @@ function Profile() {
             <Card.Body>
               <Card.Title>
                 <Link to={`/tickets/profile/${user.followingId._id}`} style={{textDecoration:"none",color:"black"}}>
-                  {user.followingUsername}
+                  @{user.followingUsername}
                 </Link>
               </Card.Title>
             </Card.Body>
@@ -348,9 +350,9 @@ function Profile() {
       ))}
     </div>
     </div>}
-    <h2>Followers ({followersList.length})</h2>
+    <h2>Followers<BsDot />{followersList.length}</h2>
     <hr />
-    {followersList.length==0 && <p>You don't have followers yet!</p>}
+    {followersList.length==0 && <p>You don't have any followers yet!</p>}
     {user && <div>
       <div className="row">
       {console.log("Followers list:", followersList)}
@@ -360,7 +362,7 @@ function Profile() {
             <Card.Body>
               <Card.Title>
                 <Link to={`/tickets/profile/${user.followerId._id}`} style={{textDecoration:"none",color:"black"}}>
-                  {user.followerUsername}
+                  @{user.followerUsername}
                 </Link>
               </Card.Title>
             </Card.Body>

@@ -44,9 +44,7 @@ function Home() {
     </div>
     <br/>
     <br/>
-    <Link to="/tickets/search" className="btn btn-outline-success">
-        View Events
-      </Link>
+    
     </div>
   );
 }

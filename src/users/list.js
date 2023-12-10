@@ -149,9 +149,11 @@ const handleShow = () => setShow(true);
           </Button>
         </Modal.Footer>
       </Modal>  }
+      <div className="container">
+      <br/>
           <h2>Users</h2>
-      
-      <table className="table table-responsive">
+      <hr/>
+      <table className="table table-striped table-hover border">
                 <thead>
                     <tr>
                         <th>Username</th>
@@ -167,8 +169,8 @@ const handleShow = () => setShow(true);
                     {users.map((user) => (
                         <tr key={user._id}>
                             <td>
-                                <Link to={`/tickets/profile/${user._id}`}>
-                                    {user.username}
+                                <Link to={`/tickets/profile/${user._id}`} style={{textDecoration:'none',color:'black',fontWeight:'bold'}}>
+                                    @{user.username}
                                 </Link>
                             </td>
                             <td>{user.firstName}</td>
@@ -177,18 +179,20 @@ const handleShow = () => setShow(true);
                             <td>{user.location}</td>
                             <td>{user.role}</td>
                             <td className="text-nowrap">
-                                <button className="btn btn-danger me-2">
-                                    <BsTrash3Fill onClick={() => deleteUser(user)} />
-                                </button>
+                                
                                 <button className="btn btn-warning me-2">
                                     <BsPencil onClick={() => {
                                         selectUser(user);
                                         handleShow();}} />
                                 </button>
+                                <button className="btn btn-danger me-2">
+                                    <BsTrash3Fill onClick={() => deleteUser(user)} />
+                                </button>
                             </td>
                         </tr>))}
                 </tbody>
             </table>
+            </div>
             </>
       )}
             {currentUser && currentUser.role !== "ADMIN" && (

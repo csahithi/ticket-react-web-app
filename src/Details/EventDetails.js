@@ -9,13 +9,13 @@ import * as reviewsClient from "../reviews/client";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import * as searchClient from "../Search/client";
+import * as eventsClient from "../events/client";
 import { BsDot } from "react-icons/bs";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdOutlineRateReview } from "react-icons/md";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 
-function Details({ location }) {
+function EventDetails({ location }) {
   
   const [currentUser, setCurrentUser] = useState(null);
   const [event, setEvent] = useState(null);
@@ -58,7 +58,7 @@ function Details({ location }) {
   };
 
   const fetchEvent = async () => {
-    const event = await client.findEventById(eventId);
+    const event = await eventsClient.findEventById(eventId);
     setEvent(event);
   };
 
@@ -86,14 +86,15 @@ function Details({ location }) {
     setLikes([_likes, ...likes]);
     fetchLikes();
   };
-  const bookTicketsAPI = async () => {
+  const bookTickets = async (eventId) => {
     try {
       const newTickets = {
+        eventId: eventId,
         userId: currentUser._id,
         noOfTickets: noOfTickets,
       };
       console.log("Tickets: ", newTickets);
-      await searchClient.insertTicketsAPI(newTickets);
+      await client.insertTickets(newTickets);
     } catch (error) {
       console.error("Error booking tickets:", error);
     }
@@ -106,11 +107,6 @@ function Details({ location }) {
     fetchReviews();
   }, []);
 
-//   if (!location || !location.state) {
-//     // Handle the case where location or location.state is undefined
-//     return <div>Error: Event details not available.</div>;
-//   }
-//   const { eventName } = location.state;
 
   return (
     <div className="container">
@@ -121,8 +117,12 @@ function Details({ location }) {
          {currentUser.role==="BUYER" ? (
             <>
            
-           { console.log("E: ", event.venues[0].id)} 
-           <button className="btn btn-danger  float-end" >Reserve tickets <IoIosArrowDroprightCircle style={{fontSize:'1.5rem'}} /></button>
+           { console.log("E: ", event._id)} 
+           <input type="number" className="form-control float-end" placeholder="0" min="1" max="10"  
+                          onChange={(e) => setNoOfTickets(e.target.value)}
+          />
+           <button className="btn btn-danger  float-end" onClick={() => bookTickets(event._id)}>Reserve tickets <IoIosArrowDroprightCircle style={{fontSize:'1.5rem'}} /></button>
+            
             <button
               onClick={currenUserLikesEvent}
               className="btn btn-warning float-end me-3">
@@ -179,8 +179,8 @@ function Details({ location }) {
           {/* <h1>{eventName}</h1> */}
           <h3><FaLocationDot />Venue</h3>
           {/* {event.venues[0].id} */}
-          <h3>{event.venues[0].name}</h3>
-          <h4>{event.venues[0].address.line1}, {event.venues[0].city.name}, {event.venues[0].state.name}, {event.venues[0].country.name}, {event.venues[0].postalCode}</h4>
+          <h3>{event.EventName}</h3>
+          <h4>{event.Venue}</h4>
           {/* <img
             src={`https://api.napster.com/imageserver/v2/events/${event.id}/images/300x300.jpg`}
             alt={event.name}
@@ -233,4 +233,4 @@ function Details({ location }) {
   );
 }
 
-export default Details;
+export default EventDetails;

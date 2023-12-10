@@ -62,9 +62,11 @@ function Events() {
       }, []);
          
   return (
+
     <div className="container">
+      {console.log("Events List: ", getEventsList)}
         <br/>
-        {currentUser && currentUser==="SELLER" && (
+        {currentUser && currentUser.role==="SELLER" && (
         <>
         <div className="row">
             <div className="col">

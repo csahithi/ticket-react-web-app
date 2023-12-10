@@ -99,6 +99,14 @@ function UserDetails() {
 
   return (
     <div className='container'>
+     
+        <br/>
+      <div className='row'>
+        <div className='col'>
+        <h2>User Details</h2>
+        </div>
+        <div className='col float-end'>
+      
       {currentUser && currentUser._id !== id && (
         <>
           {!alreadyFollowing() && !isFollowing ? (
@@ -113,8 +121,8 @@ function UserDetails() {
           )}
         </>
       )}
-        <br/>
-      <h2>User Details</h2>
+      </div>
+      </div>
       <hr/>
       <div className='row'>
         <div className='col d-flex justify-content-center'>
@@ -161,6 +169,9 @@ function UserDetails() {
               </li>
             ))}
           </ul>   */}
+          <br/>
+          <div className='row'>
+            <div className='col'>
           <h3>Followers</h3>
           <div className="list-group mb-3">
             {console.log("Followers: ", followers)}
@@ -171,11 +182,13 @@ function UserDetails() {
                 className="list-group-item"
                 to={`/tickets/profile/${follows.followerId._id}`}
               >
-                {follows.followerId.username}
-                {follows.followerId._id}
+                @{follows.followerId.username}
+                {/* {follows.followerId._id} */}
               </Link>
             ))}
           </div>
+          </div>
+          <div className='col'>
           <h3>Following</h3>
           <div className="list-group">
             {console.log("Following: ", following)}
@@ -186,10 +199,12 @@ function UserDetails() {
                 className="list-group-item"
                 to={`/tickets/profile/${follows.followingId._id}`}
               >
-                {follows.followingId.username}
-                {follows.followingId._id}
+                @{follows.followingId.username}
+                {/* {follows.followingId._id} */}
               </Link>
             ))}
+          </div>
+          </div>
           </div>
     </div>
   );

@@ -4,6 +4,11 @@ import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import './index.css';
 import * as eventsClient from "../events/client";
 import * as userClient from "../users/client";
+import { IoIosArrowDroprightCircle } from "react-icons/io";
+import { BsDot } from "react-icons/bs";
+import { BsCalendar2DateFill } from "react-icons/bs";
+import { IoTimerSharp } from "react-icons/io5";
+import { FaSearch } from "react-icons/fa";
 function Search() {
   const { search } = useParams();
   const [searchTerm, setSearchTerm] = useState(search || null);
@@ -45,20 +50,7 @@ function Search() {
       setCurrentUser(null);
     }
   };
-  // const bookTickets = async (eventID) => {
-  //   try {
-  //     const newTickets = {
-  //       eventId: eventID,
-  //       userId: currentUser._id,
-  //       tickets: noOfTickets,
-  //     };
-  //     console.log("Tickets: ", newTickets);
-  //     await client.insertTickets(newTickets);
-     
-  //   } catch (error) {
-  //     console.error("Error booking tickets:", error);
-  //   }
-  // };
+
   const bookTickets = async (eventId) => {
     try {
       const newTickets = {
@@ -91,7 +83,7 @@ function Search() {
     const [eventImage] = useState(event.images[0].url);
     return (
       <div className="col">
-      <Link to={{ pathname: `/tickets/details/${event.id}`, state: eventName }}>
+      <Link to={{ pathname: `/tickets/details/${event.id}`, state: eventName }} style={{textDecoration:'none'}}>
         <div className="card mb-3">
           <div className="row g-0">
             <div className="col-md-5">
@@ -103,10 +95,9 @@ function Search() {
               <div className="card-body">
                 <h5 className="card-title">{event.name}</h5>
                 <p className="card-text">
-                  <small className="text-muted"><b>Date: </b>{event.dates.start.localDate}</small>
-                </p>
-                <p className="card-text">
-                  <small className="text-muted"><b>Time: </b>{event.dates.start.localTime}</small>
+                  <p className="text-muted" style={{fontSize:'15px'}}><BsCalendar2DateFill style={{fontWeight:'bold',fontSize:'1.3rem'}}/> <b>{event.dates.start.localDate}</b></p>
+             
+                <p className="text-muted" style={{fontSize:'15px'}}><IoTimerSharp style={{fontWeight:'bold',fontSize:'1.5rem'}}/> <b>{event.dates.start.localTime}</b></p>
                 </p>
             
               </div>
@@ -119,7 +110,6 @@ function Search() {
 };
 
 
-
   return (
     <div className="container">
       <h1>Search</h1>
@@ -128,67 +118,70 @@ function Search() {
       <div className="alert alert-warning" role="alert">
       Enter a search term to begin.
     </div>}
-      <button
-        onClick={() => {
+     
+      <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1"><FaSearch /></span>
+      <input
+       type="text"
+       className="form-control w-70"
+       placeholder="Search..."
+       value={searchTerm}
+       onChange={(event) => {
+         setSearchTerm(event.target.value);
+         console.log(searchTerm);
+       }}/>
+      <button class="btn btn-primary" type="submit" onClick={() => {
             if(searchTerm && searchTerm!="null"){
               navigate(`/tickets/search/${searchTerm}`)
             }
             else{
               navigate(`/tickets/search`)
             }
-          }}
-        className="btn btn-primary float-end">
-        Search
-      </button>
-      <input
-        type="text"
-        className="form-control w-75"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={(event) => {
-          setSearchTerm(event.target.value);
-          console.log(searchTerm);
-        }}/>
+          }}> Search</button>
+    </div>
       <br/>
       {results && searchTerm!="null" &&
       <div className="alert alert-warning" role="alert">
       Scroll down to view results.
     </div>}
 
-      <h2>Events ({getEventsList.length})</h2>
+      <h2>Events<BsDot />{getEventsList.length}</h2>
       <hr/>
       {searchTerm!="null" &&
       <div className="row row-cols-1 row-cols-md-2 g-4">
   {getEventsList.map((event) => (
     <div key={event._id} className="col">
+      <Link to={{ pathname: `/tickets/events/details/${event._id}`, state: event.EventName }} style={{textDecoration:'none'}}>
       <div className="card text-dark bg-light mb-3">
         <div className="card-body">
           <h5 className="card-title">
           {event.EventName}
-        
           </h5>
           <p className="card-text">
            {event.Venue} | {event.Category}
           </p>
           <p className="card-text">
-           <b>Date : </b>{event.Date} <br/>
-           <b>Time : </b>{event.Time}
+           <b><BsCalendar2DateFill style={{fontWeight:'bold',fontSize:'1.3rem'}}/> </b>{event.Date} 
+           <br/>
+
+           <b><IoTimerSharp style={{fontWeight:'bold',fontSize:'1.5rem'}}/></b>{''}{event.Time}
           </p>
           {(currentUser && currentUser.role==="BUYER") ? (
-          <div className="card-footer">
-            <div className="row">
-              <div className="col-2">
+        //   <div className="card-footer">
+        //     <div className="row">
+        //       <div className="col-2">
 
-          <input type="number" className="form-control" placeholder="0" min="1" max="10"  
-                          onChange={(e) => setNoOfTickets(e.target.value)}
-          />
-              </div>
-              <div className="col">
-           <button className="btn btn-danger" onClick={() => bookTickets(event._id)}
-           >Book tickets</button>
-           </div>
-           </div>
-        </div>):(
+        //   <input type="number" className="form-control" placeholder="0" min="1" max="10"  
+        //                   onChange={(e) => setNoOfTickets(e.target.value)}
+        //   />
+        //       </div>
+        //       <div className="col">
+        //    <button className="btn btn-danger" onClick={() => bookTickets(event._id)}
+        //    >Reserve tickets <IoIosArrowDroprightCircle style={{fontSize:'1.5rem'}}/></button>
+        //    </div>
+        //    </div>
+        // </div>
+        null):(
           (!currentUser) ? (
           <div className="alert alert-warning" role="alert">
           Please log in to book tickets.
@@ -196,25 +189,25 @@ function Search() {
         )}
         </div>
       </div>
+   </Link>
     </div>
   ))}
 </div>
 }
-
-        
-
       {results && search && searchTerm!="null" &&
       <div>
       <br/>
-      <h2>Results ({results.length})</h2>
+     
+      <h2>Results<BsDot />{results.length}</h2>
       <hr/>
       <div className="row row-cols-1 row-cols-md-2 g-4"> 
           {results.map((event, index) => (
             <EventListItem key={index} event={event} />            
           ))}
       </div>
-      </div>}
-      {/* <pre>{JSON.stringify(results, null, 2)}</pre> */}
+      </div>
+      }
+
     </div>
   );
 }
