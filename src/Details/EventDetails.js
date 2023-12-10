@@ -114,7 +114,7 @@ function EventDetails({ location }) {
       {event && (
         
         <div>
-         {currentUser.role==="BUYER" ? (
+         {currentUser && currentUser.role==="BUYER" ? (
             <>
            
            { console.log("E: ", event._id)} 
@@ -191,7 +191,7 @@ function EventDetails({ location }) {
           <h3>Likes<BsDot />{likes.length} </h3>
 
           <ul className="list-group">
-            {likes.length > 0 ? (
+            {likes && likes.length > 0 ? (
             
               likes.map((like, index) => (
                 <li key={index} className="list-group-item" style={{backgroundColor:'whitesmoke',border: '3px solid',borderColor: 'black #444 #888 #ccc'}}>
@@ -211,7 +211,7 @@ function EventDetails({ location }) {
           <div className="col-8">
           <h3>Reviews<BsDot />{reviews.length}</h3>
           <ul className="list-group">
-                {reviews.length > 0 ? (
+                {reviews && reviews.length > 0 ? (
                   reviews.map((review, index) => (
                     <li key={index} className="list-group-item" style={{backgroundColor:'whitesmoke',border: '3px solid',borderColor: 'black #444 #888 #ccc'}}>
                       <Link to={`/tickets/profile/${review.userId}`} style={{color:'black'}}>
