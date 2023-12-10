@@ -7,6 +7,7 @@ import { FaCircleUser } from "react-icons/fa6";
 import * as likesClient from '../likes/client';
 import * as followsClient from '../follows/client';
 import { useSelector } from 'react-redux';
+import { LuDot } from "react-icons/lu";
 
 function UserDetails() {
   // const { userId } = useParams();
@@ -125,7 +126,7 @@ function UserDetails() {
       </div>
       <hr/>
       <div className='row'>
-        <div className='col d-flex justify-content-center'>
+        <div className='col'>
         <Card style={{ width: '22rem' }}>
         <Card.Body>
         <div className='row'>
@@ -157,6 +158,69 @@ function UserDetails() {
         </Card.Body>
     </Card>         
         </div> 
+        <div className='col'>
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+        <b>Followers<LuDot />{followers.length}</b>
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+      <div class="accordion-body">
+      {followers.length==0 && <strong>No followers yet!</strong>}
+     
+            {followers.map((follows, index) => (
+               <li class="list-group-item list-group-item-action">
+              <Link
+                key={index}
+                className="list-group-item"
+                to={`/tickets/profile/${follows.followerId._id}`}
+              >
+                @{follows.followerId.username}
+                {/* {follows.followerId._id} */}
+              </Link>
+            </li>
+            ))}
+            </div>
+      
+    </div>
+  </div>
+  </div>
+          </div>
+          <div className='col'>
+          <div class="accordion" id="accordionPanelsStayOpenExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-1" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+        <b>Following<LuDot />{following.length}</b>
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseOne-1" class="accordion-collapse collapse show">
+      <div class="accordion-body">
+      {console.log("Following: ", following)}
+            {following.length==0 && <strong>Not following anyone yet!</strong>}
+          
+            {following.map((follows, index) => (
+              
+              <li class="list-group-item list-group-item-action">
+              <Link
+                key={index}
+                className="list-group-item"
+                to={`/tickets/profile/${follows.followingId._id}`}
+              >
+                @{follows.followingId.username}
+                {/* {follows.followingId._id} */}
+              </Link>
+            </li>
+           
+            ))}
+             </div>
+           
+    </div>
+  </div>
+  </div>
+            </div>
       </div>
       {/* <h3>Likes</h3>
           <ul className="list-group">
@@ -169,43 +233,7 @@ function UserDetails() {
               </li>
             ))}
           </ul>   */}
-          <br/>
-          <div className='row'>
-            <div className='col'>
-          <h3>Followers</h3>
-          <div className="list-group mb-3">
-            {console.log("Followers: ", followers)}
-            {followers.length==0 && <p>No followers yet!</p>}
-            {followers.map((follows, index) => (
-              <Link
-                key={index}
-                className="list-group-item"
-                to={`/tickets/profile/${follows.followerId._id}`}
-              >
-                @{follows.followerId.username}
-                {/* {follows.followerId._id} */}
-              </Link>
-            ))}
-          </div>
-          </div>
-          <div className='col'>
-          <h3>Following</h3>
-          <div className="list-group">
-            {console.log("Following: ", following)}
-            {following.length==0 && <p>Not following anyone yet!</p>}
-            {following.map((follows, index) => (
-              <Link
-                key={index}
-                className="list-group-item"
-                to={`/tickets/profile/${follows.followingId._id}`}
-              >
-                @{follows.followingId.username}
-                {/* {follows.followingId._id} */}
-              </Link>
-            ))}
-          </div>
-          </div>
-          </div>
+         
     </div>
   );
 }

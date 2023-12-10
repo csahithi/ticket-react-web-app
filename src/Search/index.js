@@ -83,7 +83,7 @@ function Search() {
     const [eventImage] = useState(event.images[0].url);
     return (
       <div className="col">
-      <Link to={{ pathname: `/tickets/details/${event.id}`, state: eventName }} style={{textDecoration:'none'}}>
+      <Link to={{ pathname: `/tickets/details/${event.id}`, state: {eventName,eventUrl:event.url} }} style={{textDecoration:'none'}}>
         <div className="card mb-3">
           <div className="row g-0">
             <div className="col-md-5">
@@ -91,6 +91,7 @@ function Search() {
                 <img src={eventImage} alt={eventName} width={'200px'} height={'200px'} />
               )}
             </div>
+            {/* {console.log("UR",event.url)} */}
             <div className="col-md-7">
               <div className="card-body">
                 <h5 className="card-title">{event.name}</h5>

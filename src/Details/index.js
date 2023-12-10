@@ -16,6 +16,7 @@ import { MdOutlineRateReview } from "react-icons/md";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 
 function Details({ location }) {
+ 
   
   const [currentUser, setCurrentUser] = useState(null);
   const [event, setEvent] = useState(null);
@@ -121,7 +122,7 @@ function Details({ location }) {
          {currentUser && currentUser.role==="BUYER" ? (
             <>
            
-           { event.venues && console.log("E: ", event.venues[0].id)} 
+
            <button className="btn btn-danger  float-end" >Reserve tickets <IoIosArrowDroprightCircle style={{fontSize:'1.5rem'}} /></button>
             <button
               onClick={currenUserLikesEvent}
@@ -179,6 +180,7 @@ function Details({ location }) {
           {/* <h1>{eventName}</h1> */}
           <h3><FaLocationDot />Venue</h3>
           {/* {event.venues[0].id} */}
+
           {event.venues && (
             <>
           <h3>{event.venues[0].name}</h3>

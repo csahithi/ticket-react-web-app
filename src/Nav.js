@@ -27,9 +27,9 @@ function CustomNav() {
   const navigate = useNavigate();
   return (
   
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    
+    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+  <div className="container-fluid">
+  
     <Link to="/tickets" className="navbar-brand">
           <b>Home</b>
          </Link>
@@ -83,6 +83,10 @@ function CustomNav() {
         </Link> */}
         {/* <Link to="/project/details" className="list-group-item">
         Details
+
+      </Link> */}
+      {/* <Link to="/tickets" className="nav-link">
+        <b>FestiFIND</b>
       </Link> */}
       
       </ul>
