@@ -16,6 +16,7 @@ import { MdOutlineRateReview } from "react-icons/md";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 
 function Details({ location }) {
+ 
   
   const [currentUser, setCurrentUser] = useState(null);
   const [event, setEvent] = useState(null);
@@ -122,6 +123,7 @@ function Details({ location }) {
             <>
            
            { console.log("E: ", event.venues[0].id)} 
+           {/* {console.log("URL: ", event.url)} */}
            <button className="btn btn-danger  float-end" >Reserve tickets <IoIosArrowDroprightCircle style={{fontSize:'1.5rem'}} /></button>
             <button
               onClick={currenUserLikesEvent}
@@ -179,8 +181,10 @@ function Details({ location }) {
           {/* <h1>{eventName}</h1> */}
           <h3><FaLocationDot />Venue</h3>
           {/* {event.venues[0].id} */}
+          {console.log("URL", event.url)}
           <h3>{event.venues[0].name}</h3>
           <h4>{event.venues[0].address.line1}, {event.venues[0].city.name}, {event.venues[0].state.name}, {event.venues[0].country.name}, {event.venues[0].postalCode}</h4>
+          
           {/* <img
             src={`https://api.napster.com/imageserver/v2/events/${event.id}/images/300x300.jpg`}
             alt={event.name}

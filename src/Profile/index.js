@@ -66,17 +66,18 @@ function Profile() {
       console.log("Fetching followers list for user:", user._id);
       const followersList = await followsClient.findFollowersOfUser(user._id);
       console.log("Followers list:", followersList);
-      try {const updatedFollowersList = await Promise.all(
+      try {
+        const updatedFollowersList = await Promise.all(
         followersList.map(async (follower) => {
           const userData = await client.findUserById(follower.followerId._id);
           return { ...follower, followerUsername: userData.username };
         })
       );      
       setFollowersList(updatedFollowersList);
-    }
-      catch (error) {
-        console.error("Error fetching user:", error);
       }
+    catch (error) {
+        console.error("Error fetching user:", error);
+    }
 
     } catch (error) {
       console.error("Error fetching following list:", error);
@@ -90,8 +91,22 @@ function Profile() {
       }
       console.log("Fetching likes list for user:", user._id);
       const likesList = await likesClient.findEventsThatUserLikes(user._id);
-      console.log("Likes list:", likesList);      
-      setLikesList(likesList);
+      console.log("Likes list:", likesList);
+    //   try {
+    //     const updatedLikesList = await Promise.all(
+    //     likesList.map(
+    //       async (list) => {
+    //       const userData = await client.findUserById(list._id);
+    //       return { ...follower, followerUsername: userData.username };
+    //     }
+    //     )
+    //   );      
+    //   setFollowersList(updatedFollowersList);
+    // }
+    // catch (error) {
+    //     console.error("Error fetching user:", error);
+    // }
+    setLikesList(likesList);
     } catch (error) {
       console.error("Error fetching following list:", error);
     }
@@ -305,72 +320,103 @@ function Profile() {
       </Row>
       
     </Form>
-    
-    {/* <h2>{user._id}</h2> */}
-    <h2>Likes<BsDot />{likesList.length}</h2>
-    <hr />
-    {likesList.length==0 && <p>You haven't liked any events yet!</p>}
-    {user && <div>
-      <div className="row">
+    <br/>
+    <div className="row">
+      <div className="col">
+      <div class="accordion" id="accordionPanelsStayOpenExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+        <b>Liked Events<BsDot />{likesList.length}</b>
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+      <div class="accordion-body">
+      {likesList.length==0 && <p>You haven't liked any events yet!</p>}
+      {user && <div>
+      
       {console.log("Likes list:", likesList)}
       {likesList.map((like) => (
-        <div key={like._id} className="col-md-4 mb-4">
-          <Card style={{ backgroundColor: '#0dcaf0' }} className="hover-card">
-            <Card.Body>
-              <Card.Title>
+        <li class="list-group-item list-group-item-action">
                 <Link to={`/tickets/details/${like.eventId}`} style={{textDecoration:"none",color:"black"}}>
                   {like.eventId}
                 </Link>
-              </Card.Title>
-            </Card.Body>
-          </Card>
-        </div>
+              </li>
+
       ))}
-    </div>
+    
     </div>}
-    <h2>Following<BsDot />{followingList.length}</h2>
-    <hr />
-    {followingList.length==0 && <p>You are not following anyone yet!</p>}
-    <hr />
+        </div>
+    </div>
+  </div>
+  </div>
+    </div>
+    <div className="col">
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-one" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+        <b>Following<BsDot />{followingList.length}</b>
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseOne-one" class="accordion-collapse collapse show">
+      <div class="accordion-body">
+      {followingList.length==0 && <p>You are not following anyone yet!</p>}
     {user && <div>
-      <div className="row">
+      
       {console.log("Following list:", followingList)}
       {followingList.map((user) => (
-        <div key={user._id} className="col-md-4 mb-4">
-          <Card style={{ backgroundColor: '#0dcaf0' }} className="hover-card">
-            <Card.Body>
-              <Card.Title>
+        <li class="list-group-item list-group-item-action">
                 <Link to={`/tickets/profile/${user.followingId._id}`} style={{textDecoration:"none",color:"black"}}>
                   @{user.followingUsername}
                 </Link>
-              </Card.Title>
-            </Card.Body>
-          </Card>
-        </div>
+                </li>
       ))}
     </div>
-    </div>}
-    <h2>Followers<BsDot />{followersList.length}</h2>
-    <hr />
-    {followersList.length==0 && <p>You don't have any followers yet!</p>}
+   }
+        </div>
+    </div>
+  </div>
+  </div>
+    </div>
+    <div className="col">
+   
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-two" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+        <b>Followers<BsDot />{followersList.length}</b>
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseOne-two" class="accordion-collapse collapse show">
+      <div class="accordion-body">
+      {followersList.length==0 && <p>You don't have any followers yet!</p>}
     {user && <div>
-      <div className="row">
+      
+      {console.log("Following list:", followingList)}
+      {user && <div>
+      
       {console.log("Followers list:", followersList)}
       {followersList.map((user) => (
-        <div key={user._id} className="col-md-4 mb-4">
-          <Card style={{ backgroundColor: '#0dcaf0' }} className="hover-card">
-            <Card.Body>
-              <Card.Title>
+       <li class="list-group-item list-group-item-action">
                 <Link to={`/tickets/profile/${user.followerId._id}`} style={{textDecoration:"none",color:"black"}}>
                   @{user.followerUsername}
                 </Link>
-              </Card.Title>
-            </Card.Body>
-          </Card>
-        </div>
+                </li>
+            
       ))}
-    </div>
+ 
     </div>}
+    </div>
+   }
+        </div>
+    </div>
+  </div>
+  </div>
+
+    </div>
+    </div>
+    
     </div>   
     </div>
     </div>
