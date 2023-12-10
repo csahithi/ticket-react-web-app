@@ -2,9 +2,9 @@ import axios from "axios";
 const request = axios.create({
     withCredentials: true,
   });
-const API_BASE = "http://localhost:4000/api";
+const API_BASE = process.env.REACT_APP_BASE_API_URL;
 
-const EVENTS_API = `${API_BASE}/events`;
+const EVENTS_API = `${API_BASE}/api/events`;
 
 export const findAllEvents = async () => {
     const response = await request.get(`${EVENTS_API}`);

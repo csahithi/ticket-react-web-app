@@ -119,11 +119,10 @@ function Details({ location }) {
       {event && (
         
         <div>
-         {currentUser.role==="BUYER" ? (
+         {currentUser && currentUser.role==="BUYER" ? (
             <>
            
-           { console.log("E: ", event.venues[0].id)} 
-           {/* {console.log("URL: ", event.url)} */}
+
            <button className="btn btn-danger  float-end" >Reserve tickets <IoIosArrowDroprightCircle style={{fontSize:'1.5rem'}} /></button>
             <button
               onClick={currenUserLikesEvent}
@@ -181,10 +180,13 @@ function Details({ location }) {
           {/* <h1>{eventName}</h1> */}
           <h3><FaLocationDot />Venue</h3>
           {/* {event.venues[0].id} */}
-          {console.log("URL", event.url)}
+
+          {event.venues && (
+            <>
           <h3>{event.venues[0].name}</h3>
           <h4>{event.venues[0].address.line1}, {event.venues[0].city.name}, {event.venues[0].state.name}, {event.venues[0].country.name}, {event.venues[0].postalCode}</h4>
-          
+            </>
+          )}
           {/* <img
             src={`https://api.napster.com/imageserver/v2/events/${event.id}/images/300x300.jpg`}
             alt={event.name}
@@ -195,7 +197,7 @@ function Details({ location }) {
           <h3>Likes<BsDot />{likes.length} </h3>
 
           <ul className="list-group">
-            {likes.length > 0 ? (
+            {likes && likes.length > 0 ? (
             
               likes.map((like, index) => (
                 <li key={index} className="list-group-item" style={{backgroundColor:'whitesmoke',border: '3px solid',borderColor: 'black #444 #888 #ccc'}}>
@@ -215,7 +217,7 @@ function Details({ location }) {
           <div className="col-8">
           <h3>Reviews<BsDot />{reviews.length}</h3>
           <ul className="list-group">
-                {reviews.length > 0 ? (
+                {reviews && reviews.length > 0 ? (
                   reviews.map((review, index) => (
                     <li key={index} className="list-group-item" style={{backgroundColor:'whitesmoke',border: '3px solid',borderColor: 'black #444 #888 #ccc'}}>
                       <Link to={`/tickets/profile/${review.userId}`} style={{color:'black'}}>
