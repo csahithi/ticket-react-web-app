@@ -1,4 +1,5 @@
 import * as client from "../users/client";
+import * as eventsClient from "../events/client";
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -19,6 +20,7 @@ function Profile() {
   const [validated, setValidated] = useState(false);
   const [show, setShow] = useState(false);
   const [user, setUser] = useState(null);
+  const [eventsList, setEventsList] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const fetchUser = async () => {
@@ -111,6 +113,23 @@ function Profile() {
       console.error("Error fetching following list:", error);
     }
   };
+  const userCreatedEvents = async () => {
+    try {
+      if (!user) {
+        console.log("User is null");
+        return;
+      }
+      
+      console.log("Fetching likes list for user:", user._id);
+      const eventsList= await eventsClient.findEventsByUserId(user._id);
+      console.log("Events list:", eventsList);
+      setEventsList(eventsList);
+
+  }
+  catch (error) {
+    console.error("Error fetching user:", error);
+  }
+  };
   const updateUser = async () => {
     const status = await client.updateUser(user._id, user);
   };
@@ -137,6 +156,7 @@ function Profile() {
       fetchFollowingList();
       fetchFollowersList();
       fetchLikesList();
+      userCreatedEvents();
     }
   }, [user]);
 
@@ -416,7 +436,43 @@ function Profile() {
 
     </div>
     </div>
-    
+    <br/>
+    <div className="row">
+      <div className="col">
+      <div class="accordion" id="accordionPanelsStayOpenExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" style={{backgroundColor:'#705be9',color:'white'}} data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-two" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+        <b>Events Created So Far<BsDot />{eventsList.length}</b>
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseOne-two" class="accordion-collapse collapse show">
+      <div class="accordion-body">
+      {eventsList.length==0 && <p>You haven't created any events yet!</p>}
+    {user && <div>
+      
+      {console.log('Events list:', eventsList)}
+      {user.role=="SELLER" && <div>
+      
+      {console.log("Followers list:", followersList)}
+      {eventsList.map((event) => (
+       <li class="list-group-item list-group-item-action">
+                <Link to={`/tickets/profile/${event._id}`} style={{textDecoration:"none",color:"black"}}>
+                  {event.EventName}
+                </Link>
+       </li>
+            
+      ))}
+ 
+    </div>}
+    </div>
+   }
+        </div>
+    </div>
+  </div>
+  </div>
+      </div>
+      </div>
     </div>   
     </div>
     </div>

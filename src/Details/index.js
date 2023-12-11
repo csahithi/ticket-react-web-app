@@ -183,13 +183,17 @@ function Details({ location }) {
               </div>
           )}
           {/* <h1>{eventName}</h1> */}
-          <h3><FaLocationDot />Venue</h3>
-          {console.log("IN", event)}
-
-          {event.venues && (
+          
+          {console.log("IN", event._embedded.venues[0])}
+          {console.log("eventname",event.name)}
+          {event._embedded.venues[0] && (
             <>
-          <h3>{event.venues[0].name}</h3>
-          <h4>{event.venues[0].address.line1}, {event.venues[0].city.name}, {event.venues[0].state.name}, {event.venues[0].country.name}, {event.venues[0].postalCode}</h4>
+          <h3>{event.name}</h3>
+          <h6>Category: {event.classifications[0].segment.name}</h6>
+          <h3><FaLocationDot />Venue</h3>
+          <h4>{event._embedded.venues[0].name}</h4>
+          <h5>{event._embedded.venues[0].address.line1}, {event._embedded.venues[0].city.name}, {event._embedded.venues[0].state.name}, {event._embedded.venues[0].country.name}, 
+          {event._embedded.venues[0].postalCode}</h5>
             </>
           )}
           {/* <img

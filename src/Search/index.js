@@ -89,13 +89,13 @@ function Search() {
       <Link to={{ pathname: `/tickets/details/${event.id}`, state: {eventName,eventUrl} }} style={{textDecoration:'none'}}>
         <div className="card mb-3">
           <div className="row g-0">
-            <div className="col-md-5">
+            <div className="col-md-4">
               {eventImage && (
-                <img src={eventImage} alt={eventName} width={'200px'} height={'200px'} />
+                <img src={eventImage} alt={eventName} width={'185px'} height={'200px'} />
               )}
             </div>
             {/* {console.log("UR",event.url)} */}
-            <div className="col-md-7">
+            <div className="col-md-8">
               <div className="card-body">
                 <h5 className="card-title">{event.name}</h5>
                 <p className="card-text">
