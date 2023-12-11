@@ -155,7 +155,18 @@ function Details() {
         <div>
          {currentUser && currentUser.role==="BUYER" ? (
             <>
-           <button className="btn float-end" style={{backgroundColor:'#705be9',color:'white'}} onClick={() => {
+           <div className="d-flex justify-content-end">
+           {type!=='api' ? (
+           <input
+           type="number"
+           className="form-control me-3"
+           placeholder="0" style={{ width: '65px' }}
+           min="1"
+           max="10"
+           onChange={(e) => setNoOfTickets(e.target.value)}
+         />) :(null) 
+          }
+           <button className="btn me-3" style={{backgroundColor:'#705be9',color:'white'}} onClick={() => {
             if(type==='api') {
               redirectToTicketmaster();
             }
@@ -164,12 +175,14 @@ function Details() {
             }
             }}>
            Reserve tickets <IoIosArrowDroprightCircle style={{fontSize:'1.5rem'}} /></button>
+          
             <button
               onClick={currenUserLikesEvent} style={{backgroundColor:'#705be9',color:'white'}}
-              className="btn  float-end me-3">
+              className="btn me-3">
               <FontAwesomeIcon icon={faHeart} />
             </button>
-            <button className="btn  float-end me-3" style={{backgroundColor:'#705be9',color:'white'}} onClick={handleShow}><MdOutlineRateReview  style={{fontSize:'1.5rem'}}/> Write a review</button>
+            <button className="btn" style={{backgroundColor:'#705be9',color:'white'}} onClick={handleShow}><MdOutlineRateReview  style={{fontSize:'1.5rem'}}/> Write a review</button>
+            </div>
             <Modal show={show} onHide={handleClose}>
                   <Modal.Header closeButton>
                     <Modal.Title>Add Review</Modal.Title>

@@ -31,7 +31,7 @@ function Events() {
         }
       };
       const navigate = useNavigate();
-        const createEvent = async () => {
+        const createEvent = async (SellerId) => {
             try {
                 const newEvent = {
                     EventName: eventName,
@@ -39,6 +39,7 @@ function Events() {
                     Category: category,
                     Date: date,
                     Time: time,
+                    SellerId: SellerId,
                 };
                 console.log("Event: ", newEvent);
                 await client.insertEvent(newEvent);
@@ -128,7 +129,7 @@ function Events() {
             Close
           </Button>
           <Button style={{backgroundColor:'#705be9',color:'white'}} onClick={()=> {
-            createEvent();
+            createEvent(currentUser._id);
             handleClose()}}
             >
             Save Changes
@@ -148,7 +149,8 @@ function Events() {
         <div className="card-body">
           <h5 className="card-title">
           {event.EventName}
-        
+        {console.log("current",currentUser._id)}
+        {/* s */}
           </h5>
           <p className="card-text">
            {event.Venue} | {event.Category}
