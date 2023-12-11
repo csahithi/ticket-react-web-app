@@ -118,11 +118,11 @@ function Profile() {
   const updateUser = async () => {
     const status = await client.updateUser(user._id, user);
   };
-  const logout = async () => {
-    const status = await client.logout();
-    dispatch(setCurrentUser(null));
-    navigate("/tickets");
-  };
+  // const logout = async () => {
+  //   const status = await client.logout();
+  //   dispatch(setCurrentUser(null));
+  //   navigate("/tickets");
+  // };
   const fetchReviewsList = async () => {
     try {
       if (!user) {
@@ -183,11 +183,12 @@ function Profile() {
         <div className='row'>
             <div className='col'>
             <h2>Profile</h2>
-      
-            <div className='float-end'>
-                <Button className="me-3" style={{backgroundColor:'#705be9',color:'white'}} onClick={handleShow}><BsFillPencilFill /> Edit Profile</Button>
-                <button onClick={logout} className="btn btn-danger">Logout</button>
             </div>
+            <div className='col'>
+            {/* <div className='float-end'> */}
+                <Button className="float-end me-3" style={{backgroundColor:'#705be9',color:'white'}} onClick={handleShow}><BsFillPencilFill /> Edit Profile</Button>
+                {/* <button onClick={logout} className="btn btn-danger">Logout</button> */}
+            {/* </div> */}
         </div>
         </div>
             
