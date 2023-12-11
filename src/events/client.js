@@ -9,6 +9,7 @@ const USERS_API = `${API_BASE}/api/users`;
 export const findEventsByUserId = async (userId) => {
   try {
     const response = await request.get(`${USERS_API}/${userId}/events`);
+    console.log("event client",response.data);
     return response.data;
   } catch (error) {
     throw error;
