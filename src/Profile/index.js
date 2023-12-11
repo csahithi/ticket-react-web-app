@@ -185,7 +185,7 @@ function Profile() {
             <h2>Profile</h2>
       
             <div className='float-end'>
-                <Button variant='warning' className="me-3" onClick={handleShow}><BsFillPencilFill /> Edit Profile</Button>
+                <Button className="me-3" style={{backgroundColor:'#705be9',color:'white'}} onClick={handleShow}><BsFillPencilFill /> Edit Profile</Button>
                 <button onClick={logout} className="btn btn-danger">Logout</button>
             </div>
         </div>
@@ -355,36 +355,59 @@ function Profile() {
       
     </Form>
     <br/>
-    <div className="row">
-      <div className="col">
-      <div class="accordion" id="accordionPanelsStayOpenExample" >
+    {user && user.role === "BUYER" && (<div className="row mb-4">
+    <div className="col">
+      <div class="accordion" id="accordionPanelsStayOpenExample">
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button class="accordion-button" style={{backgroundColor:'#705be9',color:'white'}} type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-        <b>Liked Events<BsDot />{likesList.length}</b>
+      <button class="accordion-button" type="button" style={{backgroundColor:'#705be9',color:'white'}} data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-four" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne-four">
+        <b>Events Booked<BsDot />{ticketsList.length}</b>
       </button>
     </h2>
-    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+    <div id="panelsStayOpen-collapseOne-four" class="accordion-collapse collapse show">
       <div class="accordion-body">
-      {likesList.length==0 && <p>You haven't liked any events yet!</p>}
+      {ticketsList.length==0 && <p>You haven't booked any events yet!</p>}
       {user && <div>
       
-      {console.log("Likes list:", likesList)}
-      {likesList && likesList.map((like) => (
-        <li class="list-group-item list-group-item-action">
-                <Link to={`/tickets/details/${like.eventId}`} style={{textDecoration:"none",color:"black"}}>
-                  {like.eventId}
-                </Link>
-              </li>
-
+      {console.log("Tickets list:", ticketsList)}
+      <table className="table table-striped table-hover border">
+        <thead >
+          <tr>
+            <th>Event</th>
+            <th>Venue</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ticketsList && ticketsList.map((ticket) => (
+            <tr key={ticket.event._id}>
+            {/* <li class="list-group-item list-group-item-action"> */}
+              <td>
+                {ticket.event.EventName && (
+                <Link to={`/tickets/details/${ticket.event._id}`} style={{textDecoration:"none",color:"black"}}>
+                  {ticket.event.EventName}
+                </Link>)}
+              </td>
+            {/* </li> */}
+              <td>{ticket.event.Venue}</td>
+              <td>{ticket.event.Date}</td>
+              <td>{ticket.event.Time}</td>
+              <td>{ticket.event.Category}</td>
+            </tr>
       ))}
-    
+        </tbody>
+      </table>    
     </div>}
         </div>
     </div>
   </div>
   </div>
     </div>
+    </div>)}
+
+    <div className="row mb-4">
     <div className="col">
     <div class="accordion" id="accordionPanelsStayOpenExample">
   <div class="accordion-item">
@@ -449,11 +472,44 @@ function Profile() {
   </div>
 
     </div>
+    </div>
+    
+    {user && user.role === "BUYER" && (<div className="row">
+      <div className="col">
+      <div class="accordion" id="accordionPanelsStayOpenExample" >
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" style={{backgroundColor:'#705be9',color:'white'}} type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+        <b>Liked Events<BsDot />{likesList.length}</b>
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+      <div class="accordion-body">
+      {likesList.length==0 && <p>You haven't liked any events yet!</p>}
+      {user && <div>
+      
+      {console.log("Likes list:", likesList)}
+      {likesList && likesList.map((like) => (
+        <li class="list-group-item list-group-item-action">
+                <Link to={`/tickets/details/${like.eventId}`} style={{textDecoration:"none",color:"black"}}>
+                  {like.eventId}
+                </Link>
+              </li>
+
+      ))}
+    
+    </div>}
+        </div>
+    </div>
+  </div>
+  </div>
+    </div>
+    
     <div className="col">
       <div class="accordion" id="accordionPanelsStayOpenExample">
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-three" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne-three">
+      <button class="accordion-button" type="button" style={{backgroundColor:'#705be9',color:'white'}} data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-three" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne-three">
         <b>Reviews<BsDot />{reviewsList.length}</b>
       </button>
     </h2>
@@ -478,39 +534,7 @@ function Profile() {
   </div>
   </div>
     </div>
-    <div className="row">
-    <div className="col">
-      <div class="accordion" id="accordionPanelsStayOpenExample">
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-four" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne-four">
-        <b>Events Booked<BsDot />{ticketsList.length}</b>
-      </button>
-    </h2>
-    <div id="panelsStayOpen-collapseOne-four" class="accordion-collapse collapse show">
-      <div class="accordion-body">
-      {ticketsList.length==0 && <p>You haven't booked any events yet!</p>}
-      {user && <div>
-      
-      {console.log("Tickets list:", ticketsList)}
-      {ticketsList && ticketsList.map((ticket) => (
-        <li class="list-group-item list-group-item-action">
-                {ticket.event && ticket.event._id && ticket.event.EventName && (
-                <Link to={`/tickets/details/${ticket.event._id}`} style={{textDecoration:"none",color:"black"}}>
-                  {ticket.event.EventName}
-                </Link>)}
-              </li>
-
-      ))}
-    
-    </div>}
-        </div>
-    </div>
-  </div>
-  </div>
-    </div>
-    </div>
-    </div>
+    </div>)}
     
     </div>   
     </div>
