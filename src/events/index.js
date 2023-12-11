@@ -143,6 +143,7 @@ function Events() {
       <div className="row row-cols-1 row-cols-md-2 g-4">
   {getEventsList && getEventsList.map((event) => (
     <div key={event._id} className="col">
+      <Link to={`/tickets/details/${event._id}`} style={{textDecoration:'none'}}>
       <div className="card text-dark bg-light mb-3">
         <div className="card-body">
           <h5 className="card-title">
@@ -176,6 +177,7 @@ function Events() {
             }
         </div>
       </div>
+      </Link>
     </div>
   ))}
 </div>

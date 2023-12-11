@@ -489,7 +489,7 @@ function Profile() {
     </h2>
     <div id="panelsStayOpen-collapseOne-four" class="accordion-collapse collapse show">
       <div class="accordion-body">
-      {ticketsList.length==0 && <p>You haven't posted any reviews yet!</p>}
+      {ticketsList.length==0 && <p>You haven't booked any events yet!</p>}
       {user && <div>
       
       {console.log("Tickets list:", ticketsList)}
