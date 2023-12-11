@@ -28,7 +28,7 @@ const selectUser = async (user) => {
 };
 const updateUser = async () => {
     try {
-        const status = await client.updateUser(user._id, user);
+        const status = await client.updateOtherUser(user._id, user);
         setUsers(users.map((u) => (u._id === user._id ? user : u)));
     } catch (err) {
         console.log(err);

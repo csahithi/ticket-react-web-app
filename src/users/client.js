@@ -55,3 +55,7 @@ export const register = async (credentials) => {
     const response = await request.post(`${USERS_API}/register`, credentials);
     return response.data;
 };
+export const updateOtherUser = async (id, user) => {
+    const response = await request.put(`${USERS_API}/other/${id}`, user);
+    return response.data;
+};
