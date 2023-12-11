@@ -46,3 +46,7 @@ export const insertTicketsAPI = async (tickets) => {
     throw error;
   }
 };
+export const findTicketsByUserId = async (userId) => {
+  const response = await axios.get(`${TICKETS_API}/user/${userId}`);
+  return response.data;
+};

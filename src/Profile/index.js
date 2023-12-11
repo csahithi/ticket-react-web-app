@@ -15,6 +15,8 @@ import Card from 'react-bootstrap/Card';
 import "./index.css";
 import * as followsClient from "../follows/client";
 import * as likesClient from "../likes/client";
+import * as reviewsClient from "../reviews/client";
+import * as ticketsClient from "../Search/client";
 import { BsDot } from "react-icons/bs";
 function Profile() {
   const [validated, setValidated] = useState(false);
@@ -34,6 +36,8 @@ function Profile() {
   const [followingList, setFollowingList] = useState([]);
   const [followersList, setFollowersList] = useState([]);
   const [likesList, setLikesList] = useState([]);
+  const [reviewsList, setReviewsList] = useState([]);
+  const [ticketsList, setTicketsList] = useState([]);
   const fetchFollowingList = async () => {
     try {
       if (!user) {
@@ -133,10 +137,38 @@ function Profile() {
   const updateUser = async () => {
     const status = await client.updateUser(user._id, user);
   };
-  const logout = async () => {
-    const status = await client.logout();
-    dispatch(setCurrentUser(null));
-    navigate("/tickets");
+  // const logout = async () => {
+  //   const status = await client.logout();
+  //   dispatch(setCurrentUser(null));
+  //   navigate("/tickets");
+  // };
+  const fetchReviewsList = async () => {
+    try {
+      if (!user) {
+        console.log("User is null");
+        return;
+      }
+      console.log("Fetching reviews list for user:", user._id);
+      const reviewsList = await reviewsClient.findEventsThatUserReviews(user._id);
+      console.log("Reviews list:", reviewsList);
+      setReviewsList(reviewsList);
+    } catch (error) {
+      console.error("Error fetching following list:", error);
+    }
+  };
+  const fetchTicketsList = async () => {
+    try {
+      if (!user) {
+        console.log("User is null");
+        return;
+      }
+      console.log("Fetching tickets list for user:", user._id);
+      const ticketsList = await ticketsClient.findTicketsByUserId(user._id);
+      console.log("Tickets list:", ticketsList);
+      setTicketsList(ticketsList);
+    } catch (error) {
+      console.error("Error fetching following list:", error);
+    }
   };
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -157,6 +189,8 @@ function Profile() {
       fetchFollowersList();
       fetchLikesList();
       userCreatedEvents();
+      fetchReviewsList();
+      fetchTicketsList();
     }
   }, [user]);
 
@@ -169,11 +203,12 @@ function Profile() {
         <div className='row'>
             <div className='col'>
             <h2>Profile</h2>
-      
-            <div className='float-end'>
-                <Button variant='warning' className="me-3" onClick={handleShow}><BsFillPencilFill /> Edit Profile</Button>
-                <button onClick={logout} className="btn btn-danger">Logout</button>
             </div>
+            <div className='col'>
+            {/* <div className='float-end'> */}
+                <Button className="float-end me-3" style={{backgroundColor:'#705be9',color:'white'}} onClick={handleShow}><BsFillPencilFill /> Edit Profile</Button>
+                {/* <button onClick={logout} className="btn btn-danger">Logout</button> */}
+            {/* </div> */}
         </div>
         </div>
             
@@ -341,36 +376,59 @@ function Profile() {
       
     </Form>
     <br/>
-    <div className="row">
-      <div className="col">
-      <div class="accordion" id="accordionPanelsStayOpenExample" >
+    {user && user.role === "BUYER" && (<div className="row mb-4">
+    <div className="col">
+      <div class="accordion" id="accordionPanelsStayOpenExample">
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button class="accordion-button" style={{backgroundColor:'#705be9',color:'white'}} type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-        <b>Liked Events<BsDot />{likesList.length}</b>
+      <button class="accordion-button" type="button" style={{backgroundColor:'#705be9',color:'white'}} data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-four" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne-four">
+        <b>Events Booked<BsDot />{ticketsList.length}</b>
       </button>
     </h2>
-    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+    <div id="panelsStayOpen-collapseOne-four" class="accordion-collapse collapse show">
       <div class="accordion-body">
-      {likesList.length==0 && <p>You haven't liked any events yet!</p>}
+      {ticketsList.length==0 && <p>You haven't booked any events yet!</p>}
       {user && <div>
       
-      {console.log("Likes list:", likesList)}
-      {likesList.map((like) => (
-        <li class="list-group-item list-group-item-action">
-                <Link to={`/tickets/details/${like.eventId}`} style={{textDecoration:"none",color:"black"}}>
-                  {like.eventId}
-                </Link>
-              </li>
-
+      {console.log("Tickets list:", ticketsList)}
+      <table className="table table-striped table-hover border">
+        <thead >
+          <tr>
+            <th>Event</th>
+            <th>Venue</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ticketsList && ticketsList.map((ticket) => (
+            <tr key={ticket.event._id}>
+            {/* <li class="list-group-item list-group-item-action"> */}
+              <td>
+                {ticket.event.EventName && (
+                <Link to={`/tickets/details/${ticket.event._id}`} style={{textDecoration:"none",color:"black"}}>
+                  {ticket.event.EventName}
+                </Link>)}
+              </td>
+            {/* </li> */}
+              <td>{ticket.event.Venue}</td>
+              <td>{ticket.event.Date}</td>
+              <td>{ticket.event.Time}</td>
+              <td>{ticket.event.Category}</td>
+            </tr>
       ))}
-    
+        </tbody>
+      </table>    
     </div>}
         </div>
     </div>
   </div>
   </div>
     </div>
+    </div>)}
+
+    <div className="row mb-4">
     <div className="col">
     <div class="accordion" id="accordionPanelsStayOpenExample">
   <div class="accordion-item">
@@ -385,7 +443,7 @@ function Profile() {
     {user && <div>
       
       {console.log("Following list:", followingList)}
-      {followingList.map((user) => (
+      {followingList && followingList.map((user) => (
         <li class="list-group-item list-group-item-action">
                 <Link to={`/tickets/profile/${user.followingId._id}`} style={{textDecoration:"none",color:"black"}}>
                   @{user.followingUsername}
@@ -417,7 +475,7 @@ function Profile() {
       {user && <div>
       
       {console.log("Followers list:", followersList)}
-      {followersList.map((user) => (
+      {followersList && followersList.map((user) => (
        <li class="list-group-item list-group-item-action">
                 <Link to={`/tickets/profile/${user.followerId._id}`} style={{textDecoration:"none",color:"black"}}>
                   @{user.followerUsername}
@@ -436,6 +494,7 @@ function Profile() {
 
     </div>
     </div>
+
     <br/>
 {user.role=="SELLER" &&
     <div className="row">
@@ -467,12 +526,75 @@ function Profile() {
     </div>}
     </div>
    }
+
+    
+    {user && user.role === "BUYER" && (<div className="row">
+      <div className="col">
+      <div class="accordion" id="accordionPanelsStayOpenExample" >
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" style={{backgroundColor:'#705be9',color:'white'}} type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+        <b>Liked Events<BsDot />{likesList.length}</b>
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+      <div class="accordion-body">
+      {likesList.length==0 && <p>You haven't liked any events yet!</p>}
+      {user && <div>
+      
+      {console.log("Likes list:", likesList)}
+      {likesList && likesList.map((like) => (
+        <li class="list-group-item list-group-item-action">
+                <Link to={`/tickets/details/${like.eventId}`} style={{textDecoration:"none",color:"black"}}>
+                  {like.eventId}
+                </Link>
+              </li>
+
+      ))}
+    
+    </div>}
         </div>
     </div>
   </div>
   </div>
+    </div>
+    
+    <div className="col">
+      <div class="accordion" id="accordionPanelsStayOpenExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" style={{backgroundColor:'#705be9',color:'white'}} data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-three" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne-three">
+        <b>Reviews<BsDot />{reviewsList.length}</b>
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseOne-three" class="accordion-collapse collapse show">
+      <div class="accordion-body">
+      {reviewsList.length==0 && <p>You haven't posted any reviews yet!</p>}
+      {user && <div>
+      
+      {console.log("Reviews list:", reviewsList)}
+      {reviewsList && reviewsList.map((review) => (
+        <li class="list-group-item list-group-item-action">
+                <Link to={`/tickets/details/${review.eventId}`} style={{textDecoration:"none",color:"black"}}>
+                  {review.eventId}
+                </Link>
+              </li>
+
+      ))}
+    
+    </div>}
+
+        </div>
+    </div>
+  </div>
+  </div>
+
       </div>
       </div>}
+
+    </div>
+    </div>)}
+
     </div>   
     </div>
     </div>

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from "react-redux";
-import * as userClient from "./users/client";
+import { useSelector, useDispatch } from "react-redux";
+import * as client from "./users/client";
+import { setCurrentUser } from "./users/reducer";
 import { useNavigate } from "react-router-dom";
 import logo from "./images/logo.jpg";
 // import Nav from 'react-bootstrap/Nav';
 
 function CustomNav() {
   const { currentUser } = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
   console.log("Current User: ", currentUser);
   // const [currentUser, setCurrentUser] = useState(null);
   // const [presentUser, setPresentUser] = useState(null);
@@ -25,6 +27,11 @@ function CustomNav() {
   // }, []);
   // const currentUser = 1;
   const navigate = useNavigate();
+  const logout = async () => {
+    const status = await client.logout();
+    dispatch(setCurrentUser(null));
+    navigate("/tickets");
+  };
   return (
     // #705be9
     <nav className="navbar navbar-expand-lg bg-body-tertiary" >
@@ -99,6 +106,8 @@ function CustomNav() {
         View Events
       </Link>
       </form>
+
+      {currentUser && (<button onClick={logout} className="btn btn-danger ms-2">Logout</button>)}
     </div>
   </div>
 </nav>
