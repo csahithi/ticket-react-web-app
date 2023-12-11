@@ -437,6 +437,7 @@ function Profile() {
     </div>
     </div>
     <br/>
+{user.role=="SELLER" &&
     <div className="row">
       <div className="col">
       <div class="accordion" id="accordionPanelsStayOpenExample">
@@ -449,12 +450,11 @@ function Profile() {
     <div id="panelsStayOpen-collapseOne-two" class="accordion-collapse collapse show">
       <div class="accordion-body">
       {eventsList.length==0 && <p>You haven't created any events yet!</p>}
-    {user && <div>
+    {user.role=="SELLER" && <div>
       
       {console.log('Events list:', eventsList)}
       {user.role=="SELLER" && <div>
       
-      {console.log("Followers list:", followersList)}
       {eventsList.map((event) => (
        <li class="list-group-item list-group-item-action">
                 <Link to={`/tickets/profile/${event._id}`} style={{textDecoration:"none",color:"black"}}>
@@ -472,7 +472,7 @@ function Profile() {
   </div>
   </div>
       </div>
-      </div>
+      </div>}
     </div>   
     </div>
     </div>
