@@ -217,17 +217,25 @@ function Details() {
               </div>
           ))}
           {/* <h1>{eventName}</h1> */}
-          {type==='api' ? (event.venues && (
+
+          {type==='api' ? (event._embedded.venues[0] && (
             <>
+           {console.log("IN", event._embedded.venues[0])}
+                    {console.log("eventname",event.name)}
+            {event.name && (<h3>{event.name}</h3>)}
+            {event.classifications[0].segment.name &&(<h6>Category: {event.classifications[0].segment.name}</h6>)}
             <h3><FaLocationDot />Venue</h3>
-          {/* {event.venues[0].id} */}  
-          {event.venues[0] && event.venues[0].name && (<h3>{event.venues[0].name}</h3>)}
-          {event.venues[0] && (<h4>
-            {event.venues[0].address && event.venues[0].address.line1 && (<>{event.venues[0].address.line1}, </>)}
-            {event.venues[0].state && event.venues[0].state.name && (<>{event.venues[0].state.name}, </>)} 
-            {event.venues[0].country && event.venues[0].country.name && (<>{event.venues[0].country.name}, </>)}
-            {event.venues[0].postalCode && (<>{event.venues[0].postalCode}</>)}
-            </h4>)}
+          {/* {event.venues[0].id} */} 
+          
+          {event._embedded.venues[0] && event._embedded.venues[0].name && (<h4>{event._embedded.venues[0].name}</h4>)}
+          
+          {event._embedded.venues[0] && (<h5>
+            {event._embedded.venues[0].address && event._embedded.venues[0].address.line1 && (<>{event._embedded.venues[0].address.line1}, </>)}
+            {event._embedded.venues[0].state && event._embedded.venues[0].state.name && (<>{event._embedded.venues[0].state.name}, </>)} 
+            {event._embedded.venues[0].country && event._embedded.venues[0].country.name && (<>{event._embedded.venues[0].country.name}, </>)}
+            {event._embedded.venues[0].postalCode && (<>{event._embedded.venues[0].postalCode}</>)}
+            </h5>)}
+
             </>
           )): (
           <>
