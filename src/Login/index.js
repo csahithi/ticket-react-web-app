@@ -48,7 +48,7 @@ function Login() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={login} className="btn btn-primary">
+      <button onClick={login} style={{backgroundColor:'#705be9',color:'white'}} className="btn btn-primary w-100">
         Login
       </button>
 

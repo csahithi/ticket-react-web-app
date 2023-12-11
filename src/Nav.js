@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import * as userClient from "./users/client";
 import { useNavigate } from "react-router-dom";
-
+import logo from "./images/logo.jpg";
 // import Nav from 'react-bootstrap/Nav';
 
 function CustomNav() {
@@ -26,10 +26,12 @@ function CustomNav() {
   // const currentUser = 1;
   const navigate = useNavigate();
   return (
-  
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    // #705be9
+    <nav className="navbar navbar-expand-lg bg-body-tertiary" >
   <div className="container-fluid">
-  
+  <Link to="/tickets" className="navbar-brand">
+      <img src={logo} alt="Bootstrap" width="100" height="33"/>
+    </Link>
     <Link to="/tickets" className="navbar-brand">
           <b>Home</b>
          </Link>
@@ -93,7 +95,7 @@ function CustomNav() {
       
       <form class="d-flex" >
         
-      <Link to="/tickets/search" className="btn btn-outline-success">
+      <Link to="/tickets/search" className="btn btn-outline" style={{backgroundColor:'#705be9',color:'white'}}>
         View Events
       </Link>
       </form>

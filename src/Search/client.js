@@ -14,7 +14,7 @@ export const findEvents = async (searchTerm) => {
   );
   // const responseData = await response.json();
   // console.log(response);
-  // console.log(response.data._embedded.events);
+  console.log("Not embd",response.data._embedded);
   return response.data._embedded ? response.data._embedded.events : [];
 };
 
@@ -22,8 +22,8 @@ export const findEventById = async (eventId) => {
   const response = await axios.get(
     `${TICKETMASTER_API}/events/${eventId}?apikey=${API_KEY}`
   );
-  console.log(response.data._embedded);
-  return response.data._embedded ? response.data._embedded : [];
+  console.log("In search client",response.data);
+  return response.data? response.data : [];
 };
 
 export const insertTickets = async (tickets) => {

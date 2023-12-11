@@ -140,22 +140,22 @@ function EventDetails({ location }) {
             </div>
            </div> */}
            <div className="d-flex justify-content-end">
-  <button className="btn btn-primary me-3" onClick={handleShow}>
+  <button className="btn me-3" onClick={handleShow} style={{backgroundColor:'#705be9',color:'white'}}>
     <MdOutlineRateReview style={{ fontSize: '1.5rem' }} /> Write a review
   </button>
-  <button onClick={currenUserLikesEvent} className="btn btn-warning me-3">
+  <button onClick={currenUserLikesEvent} className="btn me-3" style={{backgroundColor:'#705be9',color:'white'}}>
     <FontAwesomeIcon icon={faHeart} />
   </button>
   <input
     type="number"
     className="form-control me-3"
-    placeholder="0" style={{ width: '70px' }}
+    placeholder="0" style={{ width: '65px' }}
     min="1"
     max="10"
     onChange={(e) => setNoOfTickets(e.target.value)}
   />
 
-  <button className="btn btn-danger" onClick={() => {bookTickets(event._id); alert("Tickets confirmed");window.location.reload();}}>
+  <button className="btn " style={{backgroundColor:'#705be9',color:'white'}} onClick={() => {bookTickets(event._id); alert("Tickets confirmed");window.location.reload();}}>
     Reserve tickets <IoIosArrowDroprightCircle style={{ fontSize: '1.5rem' }} />
   </button>
 
@@ -196,7 +196,7 @@ function EventDetails({ location }) {
                     <Button variant="secondary" onClick={handleClose}>
                       Close
                     </Button>
-                    <Button variant="primary"
+                    <Button style={{backgroundColor:'#705be9',color:'white'}}
                       onClick={() => {
                         handleReviewSubmit();
                         handleClose();
@@ -217,6 +217,7 @@ function EventDetails({ location }) {
           {/* {event.venues[0].id} */}
           <h3>{event.EventName}</h3>
           <h4>{event.Venue}</h4>
+  
           {/* <img
             src={`https://api.napster.com/imageserver/v2/events/${event.id}/images/300x300.jpg`}
             alt={event.name}

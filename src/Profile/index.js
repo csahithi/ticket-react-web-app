@@ -264,13 +264,13 @@ function Profile() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={()=> {
+          <Button variant="light" onClick={()=> {
             fetchUser();
             handleClose();
             }}>
             Close
           </Button>
-          <Button variant="success" onClick={()=> {
+          <Button style={{backgroundColor:'#705be9',color:'white'}} onClick={()=> {
             updateUser();
             handleClose();
             }}>
@@ -357,10 +357,10 @@ function Profile() {
     <br/>
     <div className="row">
       <div className="col">
-      <div class="accordion" id="accordionPanelsStayOpenExample">
+      <div class="accordion" id="accordionPanelsStayOpenExample" >
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+      <button class="accordion-button" style={{backgroundColor:'#705be9',color:'white'}} type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
         <b>Liked Events<BsDot />{likesList.length}</b>
       </button>
     </h2>
@@ -389,7 +389,7 @@ function Profile() {
     <div class="accordion" id="accordionPanelsStayOpenExample">
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-one" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+      <button class="accordion-button" style={{backgroundColor:'#705be9',color:'white'}} type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-one" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
         <b>Following<BsDot />{followingList.length}</b>
       </button>
     </h2>
@@ -418,7 +418,7 @@ function Profile() {
     <div class="accordion" id="accordionPanelsStayOpenExample">
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-two" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+      <button class="accordion-button" type="button" style={{backgroundColor:'#705be9',color:'white'}} data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-two" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
         <b>Followers<BsDot />{followersList.length}</b>
       </button>
     </h2>

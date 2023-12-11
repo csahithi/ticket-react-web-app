@@ -128,6 +128,11 @@ function Details() {
       console.error("Error booking tickets:", error);
     }
   };
+  const redirectToTicketmaster = () => {
+    if (event && event.url) {
+      window.location.href = event.url;
+    }
+  };
 
   useEffect(() => {
     fetchEvent();
@@ -146,13 +151,13 @@ function Details() {
     <div className="container">
       <br/>
       {event && (
-        
+        console.log("DiEvent: ", event),
         <div>
          {currentUser && currentUser.role==="BUYER" ? (
             <>
-           <button className="btn btn-danger  float-end" onClick={() => {
+           <button className="btn float-end" style={{backgroundColor:'#705be9',color:'white'}} onClick={() => {
             if(type==='api') {
-
+              redirectToTicketmaster();
             }
             else{
               bookTickets(event._id); alert("Tickets confirmed");window.location.reload();
@@ -160,11 +165,11 @@ function Details() {
             }}>
            Reserve tickets <IoIosArrowDroprightCircle style={{fontSize:'1.5rem'}} /></button>
             <button
-              onClick={currenUserLikesEvent}
-              className="btn btn-warning float-end me-3">
+              onClick={currenUserLikesEvent} style={{backgroundColor:'#705be9',color:'white'}}
+              className="btn  float-end me-3">
               <FontAwesomeIcon icon={faHeart} />
             </button>
-            <button className="btn btn-primary float-end me-3" onClick={handleShow}><MdOutlineRateReview  style={{fontSize:'1.5rem'}}/> Write a review</button>
+            <button className="btn  float-end me-3" style={{backgroundColor:'#705be9',color:'white'}} onClick={handleShow}><MdOutlineRateReview  style={{fontSize:'1.5rem'}}/> Write a review</button>
             <Modal show={show} onHide={handleClose}>
                   <Modal.Header closeButton>
                     <Modal.Title>Add Review</Modal.Title>
@@ -195,7 +200,7 @@ function Details() {
                     <Button variant="secondary" onClick={handleClose}>
                       Close
                     </Button>
-                    <Button variant="primary"
+                    <Button style={{backgroundColor:'#705be9',color:'white'}}
                       onClick={() => {
                         handleReviewSubmit();
                         handleClose();
@@ -245,9 +250,9 @@ function Details() {
             
               likes.map((like, index) => (
                 <li key={index} className="list-group-item" style={{backgroundColor:'whitesmoke',border: '3px solid',borderColor: 'black #444 #888 #ccc'}}>
-                  <b>{like.user.firstName} {like.user.lastName}</b> liked this event
+                  <b >{like.user.firstName} {like.user.lastName}</b> liked this event
                   <br/>
-                  <Link to={`/tickets/profile/${like.user._id}`} style={{textDecoration:'none'}}>
+                  <Link to={`/tickets/profile/${like.user._id}`} style={{color:'#705be9',textDecoration:'none'}}>
                     @{like.user.username}
                   </Link>
                 </li>
