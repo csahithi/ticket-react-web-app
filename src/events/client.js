@@ -21,4 +21,4 @@ export const insertEvent = async (event) => {
     } catch (error) {
       throw error;
     }
-  }
+}

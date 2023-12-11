@@ -31,3 +31,7 @@ export const createReview = async (reviewData) => {
       throw error;
     }
   };
+export const findEventsThatUserReviews = async (userId) => {
+    const response = await request.get(`${REVIEWS_API}/user/${userId}`);
+    return response.data;
+};
