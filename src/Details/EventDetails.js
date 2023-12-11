@@ -209,7 +209,7 @@ function EventDetails({ location }) {
             
           ):(
             <div className="alert alert-warning" role="alert">
-                Please log in to like the event or add a review.
+                Only a Buyer can like the event or add a review. Please log in.
               </div>
           )}
           {/* <h1>{eventName}</h1> */}

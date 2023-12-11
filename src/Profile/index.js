@@ -375,6 +375,7 @@ function Profile() {
       </Row>
       
     </Form>
+    </div>
     <br/>
     {user && user.role === "BUYER" && (<div className="row mb-4">
     <div className="col">
@@ -516,7 +517,7 @@ function Profile() {
       
       {eventsList.map((event) => (
        <li class="list-group-item list-group-item-action">
-                <Link to={`/tickets/profile/${event._id}`} style={{textDecoration:"none",color:"black"}}>
+                <Link to={`/tickets/events/details/${event._id}`} style={{textDecoration:"none",color:"black"}}>
                   {event.EventName}
                 </Link>
        </li>
@@ -526,6 +527,13 @@ function Profile() {
     </div>}
     </div>
    }
+        </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>}
+
 
     
     {user && user.role === "BUYER" && (<div className="row">
@@ -590,16 +598,15 @@ function Profile() {
   </div>
 
       </div>
-      </div>}
+      </div>)}
 
     </div>
     </div>)}
 
     </div>   
-    </div>
-    </div>
-    )}
-    </div>
+
+    
+   
   
     </>
   );
