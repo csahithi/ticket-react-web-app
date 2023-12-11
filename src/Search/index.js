@@ -86,7 +86,7 @@ function Search() {
     console.log("EventURL: ", eventUrl);
     return (
       <div className="col">
-      <Link to={{ pathname: `/tickets/details/${event.id}`, state: {eventName,eventUrl} }} style={{textDecoration:'none'}}>
+      <Link to={`/tickets/details/${event.id}`} style={{textDecoration:'none'}}>
         <div className="card mb-3">
           <div className="row g-0">
             <div className="col-md-5">
@@ -155,7 +155,7 @@ function Search() {
       <div className="row row-cols-1 row-cols-md-2 g-4">
   {getEventsList.map((event) => (
     <div key={event._id} className="col">
-      <Link to={{ pathname: `/tickets/events/details/${event._id}`, state: event.EventName }} style={{textDecoration:'none'}}>
+      <Link to={`/tickets/details/${event._id}`} style={{textDecoration:'none'}}>
       <div className="card text-dark bg-light mb-3">
         <div className="card-body">
           <h5 className="card-title">

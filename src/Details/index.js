@@ -10,14 +10,13 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import * as searchClient from "../Search/client";
+import * as eventsClient from "../events/client";
 import { BsDot } from "react-icons/bs";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdOutlineRateReview } from "react-icons/md";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 
-function Details({ location }) {
- 
-  
+function Details() {
   const [currentUser, setCurrentUser] = useState(null);
   const [event, setEvent] = useState(null);
   const { eventId } = useParams();
@@ -32,6 +31,7 @@ function Details({ location }) {
   const handleRangeChange = (e) => {
     setRangeValue(e.target.value);
   };
+  const [type, setType] = useState("api");
   
 // console.log("S: ", location);
   const handleReviewSubmit = async () => {
@@ -59,8 +59,23 @@ function Details({ location }) {
   };
 
   const fetchEvent = async () => {
-    const event = await client.findEventById(eventId);
-    
+    let event = null;
+    try {
+    event = await client.findEventById(eventId);
+    if (event) {
+      setType("api");
+      console.log("API event: ", event);
+    }
+    else {
+      setType("db");
+      event = await eventsClient.findEventById(eventId);
+      console.log("DB event: ", event);
+    }
+  } catch (error) {
+      setType("db");
+      event = await eventsClient.findEventById(eventId);
+      console.log("DB event: ", event);
+  }
     setEvent(event);
   };
 
@@ -87,6 +102,19 @@ function Details({ location }) {
     );
     setLikes([_likes, ...likes]);
     fetchLikes();
+  };
+  const bookTickets = async (eventId) => {
+    try {
+      const newTickets = {
+        eventId: eventId,
+        userId: currentUser._id,
+        noOfTickets: noOfTickets,
+      };
+      console.log("Tickets: ", newTickets);
+      await client.insertTickets(newTickets);
+    } catch (error) {
+      console.error("Error booking tickets:", error);
+    }
   };
   const bookTicketsAPI = async () => {
     try {
@@ -127,8 +155,15 @@ function Details({ location }) {
         <div>
          {currentUser && currentUser.role==="BUYER" ? (
             <>
-
-           <button className="btn   float-end" onClick={redirectToTicketmaster} style={{backgroundColor:'#705be9',color:'white'}}>Reserve tickets <IoIosArrowDroprightCircle style={{fontSize:'1.5rem'}} /></button>
+           <button className="btn float-end" style={{backgroundColor:'#705be9',color:'white'}} onClick={() => {
+            if(type==='api') {
+              redirectToTicketmaster();
+            }
+            else{
+              bookTickets(event._id); alert("Tickets confirmed");window.location.reload();
+            }
+            }}>
+           Reserve tickets <IoIosArrowDroprightCircle style={{fontSize:'1.5rem'}} /></button>
             <button
               onClick={currenUserLikesEvent} style={{backgroundColor:'#705be9',color:'white'}}
               className="btn  float-end me-3">
@@ -156,8 +191,7 @@ function Details({ location }) {
                           min={0}
                           max={5}
                           value={rangeValue}
-                          onChange={handleRangeChange}  />
-
+                          onChange={handleRangeChange} />
                       </Form.Group>
                     </Form>
 
@@ -177,20 +211,30 @@ function Details({ location }) {
                 </Modal>
             </>
             
-          ):(
+          ):( !currentUser && (
             <div className="alert alert-warning" role="alert">
                 Please log in to like the event or add a review.
               </div>
-          )}
+          ))}
           {/* <h1>{eventName}</h1> */}
-          <h3><FaLocationDot />Venue</h3>
-          {console.log("IN", event)}
-
-          {event.venues && (
+          {type==='api' ? (event.venues && (
             <>
-          <h3>{event.venues[0].name}</h3>
-          <h4>{event.venues[0].address.line1}, {event.venues[0].city.name}, {event.venues[0].state.name}, {event.venues[0].country.name}, {event.venues[0].postalCode}</h4>
+            <h3><FaLocationDot />Venue</h3>
+          {/* {event.venues[0].id} */}  
+          {event.venues[0] && event.venues[0].name && (<h3>{event.venues[0].name}</h3>)}
+          {event.venues[0] && (<h4>
+            {event.venues[0].address && event.venues[0].address.line1 && (<>{event.venues[0].address.line1}, </>)}
+            {event.venues[0].state && event.venues[0].state.name && (<>{event.venues[0].state.name}, </>)} 
+            {event.venues[0].country && event.venues[0].country.name && (<>{event.venues[0].country.name}, </>)}
+            {event.venues[0].postalCode && (<>{event.venues[0].postalCode}</>)}
+            </h4>)}
             </>
+          )): (
+          <>
+          <h3><FaLocationDot />Venue</h3>
+          <h3>{event.EventName}</h3>
+          <h4>{event.Venue}</h4>
+          </>
           )}
           {/* <img
             src={`https://api.napster.com/imageserver/v2/events/${event.id}/images/300x300.jpg`}
