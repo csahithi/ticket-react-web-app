@@ -75,7 +75,7 @@ function Events() {
         <div className="col float-end">
     
        
-        <button className="btn btn-info float-end"  onClick={handleShow}><AiFillPlusSquare style={{fontSize:'1.5rem'}}/> Create Event</button>
+        <button className="btn btn-info float-end"  style={{backgroundColor:'#705be9',color:'white'}} onClick={handleShow}><AiFillPlusSquare style={{fontSize:'1.5rem'}}/> Create Event</button>
         <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Create Event</Modal.Title>
@@ -127,7 +127,7 @@ function Events() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={()=> {
+          <Button style={{backgroundColor:'#705be9',color:'white'}} onClick={()=> {
             createEvent();
             handleClose()}}
             >

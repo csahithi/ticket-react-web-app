@@ -141,7 +141,7 @@ const handleShow = () => setShow(true);
             }}>
             Close
           </Button>
-          <Button variant="success" onClick={()=> {
+          <Button style={{backgroundColor:'#705be9',color:'white'}} onClick={()=> {
             updateUser();
             handleClose();
             }}>
@@ -154,7 +154,7 @@ const handleShow = () => setShow(true);
           <h2>Users</h2>
       <hr/>
       <table className="table table-striped table-hover border">
-                <thead>
+                <thead >
                     <tr>
                         <th>Username</th>
                         <th>First Name</th>

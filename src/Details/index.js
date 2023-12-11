@@ -60,6 +60,7 @@ function Details({ location }) {
 
   const fetchEvent = async () => {
     const event = await client.findEventById(eventId);
+    
     setEvent(event);
   };
 
@@ -99,6 +100,11 @@ function Details({ location }) {
       console.error("Error booking tickets:", error);
     }
   };
+  const redirectToTicketmaster = () => {
+    if (event && event.url) {
+      window.location.href = event.url;
+    }
+  };
 
   useEffect(() => {
     fetchEvent();
@@ -117,19 +123,18 @@ function Details({ location }) {
     <div className="container">
       <br/>
       {event && (
-        
+        console.log("DiEvent: ", event),
         <div>
          {currentUser && currentUser.role==="BUYER" ? (
             <>
-           
 
-           <button className="btn btn-danger  float-end" >Reserve tickets <IoIosArrowDroprightCircle style={{fontSize:'1.5rem'}} /></button>
+           <button className="btn   float-end" onClick={redirectToTicketmaster} style={{backgroundColor:'#705be9',color:'white'}}>Reserve tickets <IoIosArrowDroprightCircle style={{fontSize:'1.5rem'}} /></button>
             <button
-              onClick={currenUserLikesEvent}
-              className="btn btn-warning float-end me-3">
+              onClick={currenUserLikesEvent} style={{backgroundColor:'#705be9',color:'white'}}
+              className="btn  float-end me-3">
               <FontAwesomeIcon icon={faHeart} />
             </button>
-            <button className="btn btn-primary float-end me-3" onClick={handleShow}><MdOutlineRateReview  style={{fontSize:'1.5rem'}}/> Write a review</button>
+            <button className="btn  float-end me-3" style={{backgroundColor:'#705be9',color:'white'}} onClick={handleShow}><MdOutlineRateReview  style={{fontSize:'1.5rem'}}/> Write a review</button>
             <Modal show={show} onHide={handleClose}>
                   <Modal.Header closeButton>
                     <Modal.Title>Add Review</Modal.Title>
@@ -151,7 +156,7 @@ function Details({ location }) {
                           min={0}
                           max={5}
                           value={rangeValue}
-                          onChange={handleRangeChange} />
+                          onChange={handleRangeChange}  />
 
                       </Form.Group>
                     </Form>
@@ -161,7 +166,7 @@ function Details({ location }) {
                     <Button variant="secondary" onClick={handleClose}>
                       Close
                     </Button>
-                    <Button variant="primary"
+                    <Button style={{backgroundColor:'#705be9',color:'white'}}
                       onClick={() => {
                         handleReviewSubmit();
                         handleClose();
@@ -179,7 +184,7 @@ function Details({ location }) {
           )}
           {/* <h1>{eventName}</h1> */}
           <h3><FaLocationDot />Venue</h3>
-          {/* {event.venues[0].id} */}
+          {console.log("IN", event)}
 
           {event.venues && (
             <>
@@ -201,9 +206,9 @@ function Details({ location }) {
             
               likes.map((like, index) => (
                 <li key={index} className="list-group-item" style={{backgroundColor:'whitesmoke',border: '3px solid',borderColor: 'black #444 #888 #ccc'}}>
-                  <b>{like.user.firstName} {like.user.lastName}</b> liked this event
+                  <b >{like.user.firstName} {like.user.lastName}</b> liked this event
                   <br/>
-                  <Link to={`/tickets/profile/${like.user._id}`} style={{textDecoration:'none'}}>
+                  <Link to={`/tickets/profile/${like.user._id}`} style={{color:'#705be9',textDecoration:'none'}}>
                     @{like.user.username}
                   </Link>
                 </li>

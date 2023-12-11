@@ -112,7 +112,7 @@ function UserDetails() {
         <>
           {!alreadyFollowing() && !isFollowing ? (
             
-            <button onClick={followUser} className="btn btn-warning float-end">
+            <button onClick={followUser} style={{backgroundColor:'#705be9',color:'white'}} className="btn float-end">
             Follow
           </button>
           ) : (
@@ -162,12 +162,12 @@ function UserDetails() {
         <div class="accordion" id="accordionPanelsStayOpenExample">
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+      <button class="accordion-button" style={{backgroundColor:'#705be9',color:'white'}} type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
         <b>Followers<LuDot />{followers.length}</b>
       </button>
     </h2>
     <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-      <div class="accordion-body">
+      <div class="accordion-body" >
       {followers.length==0 && <strong>No followers yet!</strong>}
      
             {followers.map((follows, index) => (
@@ -192,7 +192,7 @@ function UserDetails() {
           <div class="accordion" id="accordionPanelsStayOpenExample">
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-1" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+      <button class="accordion-button" style={{backgroundColor:'#705be9',color:'white'}} type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-1" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
         <b>Following<LuDot />{following.length}</b>
       </button>
     </h2>

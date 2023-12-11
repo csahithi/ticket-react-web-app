@@ -79,11 +79,14 @@ function Search() {
 
 
   const EventListItem = ({ event }) => {
+    // console.log("Event: ", event);
     const [eventName] = useState(event.name);
     const [eventImage] = useState(event.images[0].url);
+    const [eventUrl] = useState(event.url);
+    console.log("EventURL: ", eventUrl);
     return (
       <div className="col">
-      <Link to={{ pathname: `/tickets/details/${event.id}`, state: {eventName,eventUrl:event.url} }} style={{textDecoration:'none'}}>
+      <Link to={{ pathname: `/tickets/details/${event.id}`, state: {eventName,eventUrl} }} style={{textDecoration:'none'}}>
         <div className="card mb-3">
           <div className="row g-0">
             <div className="col-md-5">
@@ -121,7 +124,7 @@ function Search() {
     </div>}
      
       <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon1"><FaSearch /></span>
+      <span class="input-group-text" style={{backgroundColor:'#705be9',color:'white'}} id="basic-addon1"><FaSearch /></span>
       <input
        type="text"
        className="form-control w-70"
@@ -131,7 +134,7 @@ function Search() {
          setSearchTerm(event.target.value);
          console.log(searchTerm);
        }}/>
-      <button class="btn btn-primary" type="submit" onClick={() => {
+      <button class="btn" style={{backgroundColor:'#705be9',color:'white'}} type="submit" onClick={() => {
             if(searchTerm && searchTerm!="null"){
               navigate(`/tickets/search/${searchTerm}`)
             }

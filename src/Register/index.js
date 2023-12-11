@@ -80,7 +80,7 @@ function Register() {
                 </label>
             </div>
       
-            <button className="btn btn-primary w-100" onClick={register}>
+            <button className="btn btn-primary w-100" style={{backgroundColor:'#705be9',color:'white'}} onClick={register}>
                 Register
             </button>
         </Card.Body>
